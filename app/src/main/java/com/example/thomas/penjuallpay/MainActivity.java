@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.nvHome);
 
         fab = findViewById(R.id.fab1);
+        Button btnLgout = findViewById(R.id.btnLogOut);
 
         bottomNavigationView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -64,5 +66,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
         this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    public void logout(View v){
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
+
+        //this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }
