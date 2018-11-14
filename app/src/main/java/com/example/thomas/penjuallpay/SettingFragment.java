@@ -1,6 +1,7 @@
 package com.example.thomas.penjuallpay;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -36,5 +37,6 @@ public class SettingFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_setting, container, false);
     }
+
 
 }

@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         fab = findViewById(R.id.fab1);
         btnHomeWithdraw = (Button) findViewById(R.id.btnHomeWithdraw);
+        Button btnLgout = findViewById(R.id.btnLogOut);
 
         bottomNavigationView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -76,5 +77,12 @@ public class MainActivity extends AppCompatActivity {
     public void toWithdraw(View v){
         Intent intent = new Intent(MainActivity.this, WithdrawActivity.class);
         startActivity(intent);
+    }
+
+    public void logout(View v){
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
+
+        //this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }
