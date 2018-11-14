@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                                 fab.hide();
                                 break;
                             case R.id.navigation_setting:
-                                selectedFragment = HomeFragment.newInstance();
+                                selectedFragment = SettingFragment.newInstance();
                                 fab.hide();
                                 break;
                         }
