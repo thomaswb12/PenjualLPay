@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -36,6 +38,14 @@ public class QRActivity extends AppCompatActivity {
         catch (WriterException e){
             e.printStackTrace();
         }
+
+    }
+
+    public void back(View v){
+        Intent intent = new Intent(this,TransaksiActivity.class);
+        startActivity(intent);
+
+        this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @Override
