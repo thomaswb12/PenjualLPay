@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                                 selectedFragment = HistoryFragment.newInstance();
                                 fab.hide();
                                 break;
-                            case R.id.navigation_notifications:
+                            case R.id.navigation_setting:
                                 selectedFragment = HomeFragment.newInstance();
                                 fab.hide();
                                 break;
