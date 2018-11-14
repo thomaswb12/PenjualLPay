@@ -59,16 +59,18 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/btnHomeWithdraw"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
                     android:background="@drawable/rounded_border"
                     android:clickable="true"
                     android:text="Withdraw"
+                    android:onClick="toWithdraw"
+
 
                     android:textColor="@color/windowBackground"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -76,7 +78,8 @@
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.196" />
+                    app:layout_constraintVertical_bias="0.196"
+                    tools:ignore="OnClick" />
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>
 

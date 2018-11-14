@@ -16,6 +16,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    public Button btnHomeWithdraw;
     private FloatingActionButton fab;
 
     @Override
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.nvHome);
 
         fab = findViewById(R.id.fab1);
+        btnHomeWithdraw = (Button) findViewById(R.id.btnHomeWithdraw);
         Button btnLgout = findViewById(R.id.btnLogOut);
 
         bottomNavigationView.setOnNavigationItemSelectedListener
@@ -55,10 +57,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+
+
         //Manually displaying the first fragment - one time only
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
         transaction.commit();
+
+
     }
 
     public void toTransaksi(View v){
@@ -66,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
         this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    public void toWithdraw(View v){
+        Intent intent = new Intent(MainActivity.this, WithdrawActivity.class);
+        startActivity(intent);
     }
 
     public void logout(View v){

@@ -7,33 +7,31 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity {
-    public Button btnLoginLogin;
-    public Button btnLoginRegister;
-
+public class RegistrationActivity extends AppCompatActivity {
+    public Button btnRegisRegister;
+    public Button btnRegisLogin;
     private static long back_pressed ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activiy_login);
+        setContentView(R.layout.activity_registration);
 
-        btnLoginLogin = (Button) findViewById(R.id.btnLoginLogin);
-        btnLoginRegister = (Button) findViewById(R.id.btnLoginRegister);
+        btnRegisLogin = (Button) findViewById(R.id.btnRegisLogin);
+        btnRegisRegister = (Button) findViewById(R.id.btnRegisRegister);
 
-        btnLoginRegister.setOnClickListener(new View.OnClickListener() {
+        btnRegisLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
 
-        //LOGIN sementara (tanpa pengecekan nomor&password)
-        btnLoginLogin.setOnClickListener(new View.OnClickListener() {
+        btnRegisRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });

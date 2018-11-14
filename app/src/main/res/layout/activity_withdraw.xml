@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrey">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnWithdrawBack"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                app:srcCompat="?attr/actionModeCloseDrawable" />
+
+            <TextView
+                android:id="@+id/txtWithdrawTitle"
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                android:paddingTop="12dp"
+                android:text="Withdraw"
+                android:textAlignment="inherit"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#AAA"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/txtWithdrawTitleSaldo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="My Saldo"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/txtWithdrawSaldo"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:text="Rp 536.0000,00"
+            android:textAlignment="center"
+            android:textColor="@color/Orange"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="15dp"
+            android:background="#AAA"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="30dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="15dp">
+
+            <EditText
+                android:id="@+id/txtWithdrawAmount"
+                android:layout_width="341dp"
+                android:layout_height="64dp"
+                android:ems="10"
+                android:hint="Enter Withdraw Amount"
+                android:inputType="number"
+                android:lines="@android:integer/config_longAnimTime"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/txtWithdrawMinimum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Minimal withdraw Rp 50.000,00"
+                android:textStyle="italic" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#AAA"
+            android:visibility="visible" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGrey"
+            android:orientation="vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="15dp">
+
+            <TextView
+                android:id="@+id/txtTopUpPayment"
+                android:layout_width="342dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Select Bill"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/my_button_white"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="210dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="BCA - 6042262273"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/my_button_white"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="210dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="BNI - 04527655297"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom">
+
+            <Button
+                android:id="@+id/btnWithdrawWithdraw"
+                android:layout_width="fill_parent"
+                android:layout_height="57dp"
+                android:background="@color/colorPrimaryDark"
+                android:text="WITHDRAW"
+                android:textColor="@color/cardview_light_background" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
