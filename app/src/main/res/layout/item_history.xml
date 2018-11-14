@@ -75,18 +75,18 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/txtStatus"
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Total" />
+                            android:text="Payment" />
 
                         <TextView
                             android:id="@+id/txtHarga"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Rp 30000" />
+                            android:text="+Rp 30000" />
                     </LinearLayout>
 
                     <LinearLayout
