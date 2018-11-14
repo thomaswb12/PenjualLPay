@@ -131,8 +131,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Selesai"
+        android:textColor="@color/textColorPrimary"
         android:onClick="back"
-        
+        android:background="@drawable/my_button_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
