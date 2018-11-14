@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                                 selectedFragment = HomeFragment.newInstance();
                                 fab.show();
                                 break;
-                            case R.id.navigation_dashboard:
+                            case R.id.navigation_history:
                                 selectedFragment = HistoryFragment.newInstance();
                                 fab.hide();
                                 break;
