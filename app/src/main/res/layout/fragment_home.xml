@@ -87,7 +87,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@color/Orange"
+            android:background="@color/GoldenYellow"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -97,18 +97,19 @@
             app:layout_constraintVertical_bias="0.349">
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/imgHomeStoreLogo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="84dp"
                 android:layout_marginTop="20dp"
-                android:src="@mipmap/ic_launcher_round"
-                android:layout_marginBottom="30dp"/>
+                android:layout_marginBottom="30dp"
+                android:src="@drawable/ic_toko_cookies"
+                android:textAlignment="center" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
 
                 <TextView
 
@@ -116,25 +117,25 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Store"
                     android:paddingLeft="50dp"
-                    android:textSize="20sp"/>
+                    android:text="Store"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
-                    android:text="La Difa Cookies" />
+                    android:text="La Difa Cookies"
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView17"
@@ -142,41 +143,41 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingLeft="50dp"
-                    android:textSize="20sp"
-                    android:text="Email" />
+                    android:text="Email"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/textView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
                     android:layout_weight="1"
-                    android:text="ladifa@gmail.com" />
+                    android:text="ladifa@gmail.com"
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView18"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
                     android:paddingLeft="50dp"
-                    android:text="Phone" />
+                    android:text="Phone"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
-                    android:text="+6289521337118" />
+                    android:text="+6289521337118"
+                    android:textSize="20sp" />
 
             </LinearLayout>
         </LinearLayout>
