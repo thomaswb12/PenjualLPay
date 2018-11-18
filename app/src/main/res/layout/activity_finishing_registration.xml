@@ -68,6 +68,7 @@
                 android:layout_marginBottom="70dp"
                 android:layout_marginStart="88dp"
                 android:background="@drawable/my_button_transparant_border_white"
+                android:onClick="doneRegister"
                 android:text="Done"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"

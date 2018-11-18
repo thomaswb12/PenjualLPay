@@ -56,7 +56,7 @@ public class FinishingRegistrationActivity extends AppCompatActivity {
         }
     }
 
-    public void doneRegister(){
+    public void doneRegister(View v){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
