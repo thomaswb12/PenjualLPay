@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".VerificationNumberActivity">
+
+    <FrameLayout
+        android:layout_width="279dp"
+        android:layout_height="485dp"
+
+        android:layout_marginBottom="36dp"
+        android:layout_marginEnd="53dp"
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/mix_shape_border_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.545">
+
+        <RelativeLayout
+            android:layout_width="297dp"
+            android:layout_height="496dp">
+
+            <ImageView
+                android:id="@+id/imgVerifNumberLogo"
+                android:layout_width="122dp"
+                android:layout_height="86dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="401dp"
+                android:layout_marginEnd="99dp"
+                android:layout_marginStart="76dp"
+                android:layout_marginTop="9dp"
+                app:layout_constraintBottom_toTopOf="@+id/frmLoginBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_lpay_seller" />
+
+            <Button
+                android:id="@+id/btnVerifNumberRegister"
+                android:layout_width="97dp"
+                android:layout_height="27dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="55dp"
+                android:layout_marginStart="86dp"
+                android:background="@drawable/my_button_transparant_border_white"
+                android:text="Register"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="271dp"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/edtVerifNumberInput"
+                android:layout_alignParentStart="true"
+                android:text="Enter your verification number here :"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="271dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="146dp"
+                android:text="A verification number has send to your phone number"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/edtVerifNumberInput"
+                android:layout_width="229dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="175dp"
+                android:layout_marginStart="23dp"
+                android:backgroundTint="@color/colorWhite"
+                android:ems="10"
+                android:inputType="number"
+                android:shadowColor="@color/colorWhite"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textColorHighlight="@color/colorWhite"
+                android:textColorLink="@color/colorWhite"
+                android:textSize="24sp" />
+
+        </RelativeLayout>
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

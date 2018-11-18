@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".FinishingRegistrationActivity">
+
+    <FrameLayout
+        android:layout_width="279dp"
+        android:layout_height="485dp"
+
+        android:layout_marginBottom="36dp"
+        android:layout_marginEnd="53dp"
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/mix_shape_border_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.545">
+
+        <RelativeLayout
+            android:layout_width="297dp"
+            android:layout_height="496dp">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="271dp"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/txtRegis2StoreName"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="-165dp"
+                android:text="Welcome to L-Pay Seller,"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imgRegis2Logo"
+                android:layout_width="122dp"
+                android:layout_height="86dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="401dp"
+                android:layout_marginEnd="99dp"
+                android:layout_marginStart="76dp"
+                android:layout_marginTop="9dp"
+                app:layout_constraintBottom_toTopOf="@+id/frmLoginBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_lpay_seller" />
+
+            <Button
+                android:id="@+id/btnFinsihingDone"
+                android:layout_width="97dp"
+                android:layout_height="27dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="70dp"
+                android:layout_marginStart="88dp"
+                android:background="@drawable/my_button_transparant_border_white"
+                android:text="Done"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/txtRegis2StoreName"
+                android:layout_width="275dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="165dp"
+                android:text="xxx"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgRegis2StoreIcon"
+                android:layout_width="103dp"
+                android:layout_height="96dp"
+                android:layout_above="@+id/textView12"
+                android:layout_alignStart="@+id/btnFinsihingDone"
+                android:src="@drawable/ic_store_default"
+                app:civ_border_color="#fff"
+                app:civ_border_width="2dp" />
+
+            <ImageButton
+                android:id="@+id/btnRegis2ChangeIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imgRegis2StoreIcon"
+                android:layout_alignEnd="@+id/btnFinsihingDone"
+                android:background="#909090"
+                app:srcCompat="@drawable/ic_edit_white_24dp" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/btnFinsihingDone"
+                android:layout_marginBottom="161dp" />
+
+        </RelativeLayout>
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

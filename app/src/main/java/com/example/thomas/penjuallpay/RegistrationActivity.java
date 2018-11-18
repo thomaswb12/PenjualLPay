@@ -5,12 +5,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class RegistrationActivity extends AppCompatActivity {
     public Button btnRegisRegister;
     public Button btnRegisLogin;
-    private static long back_pressed ;
+    private static long back_pressed;
+    public TextView edtRegisName;
+    public TextView edtRegisPhoneNumber;
+    public TextView edtRegisEmail;
+    public TextView edtRegisPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +24,10 @@ public class RegistrationActivity extends AppCompatActivity {
 
         btnRegisLogin = (Button) findViewById(R.id.btnRegisLogin);
         btnRegisRegister = (Button) findViewById(R.id.btnRegisRegister);
+        edtRegisName=(TextView) findViewById(R.id.edtRegisName);
+        edtRegisPhoneNumber=(TextView) findViewById(R.id.edtRegisPhoneNumber);
+        edtRegisEmail=(TextView) findViewById(R.id.edtRegisEmail);
+        edtRegisPassword=(TextView) findViewById(R.id.edtRegisPassword);
 
         btnRegisLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,7 +40,16 @@ public class RegistrationActivity extends AppCompatActivity {
         btnRegisRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                String storeName = edtRegisName.getText().toString();
+                String storePhone = edtRegisPhoneNumber.getText().toString();
+                String storeEmail = edtRegisEmail.getText().toString();
+                String storePassword = edtRegisPassword.getText().toString();
+
+                Intent intent = new Intent(RegistrationActivity.this, VerificationNumberActivity.class);
+                intent.putExtra("storeName",storeName);
+                intent.putExtra("storePhone",storePhone);
+                intent.putExtra("storeEmail",storeEmail);
+                intent.putExtra("storePassword",storePassword);
                 startActivity(intent);
             }
         });

@@ -234,7 +234,7 @@
                 android:layout_marginStart="88dp"
                 android:layout_marginTop="386dp"
                 android:background="@drawable/my_button_transparant_border_white"
-                android:text="Register"
+                android:text="NEXT"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
