@@ -1,17 +1,29 @@
 package com.example.thomas.penjuallpay;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 
 public class FinishingRegistrationActivity extends AppCompatActivity {
 
@@ -20,7 +32,14 @@ public class FinishingRegistrationActivity extends AppCompatActivity {
     public TextView txtRegis2StoreName;
     public Button btnFinsihingDone;
 
-    private static final int PICK_IMAGE = 100;
+    private ProgressDialog progressDialog;
+
+    private Uri file;
+    private FirebaseAuth mAuth;
+    private FirebaseUser curUser;
+    private StorageReference mStorageRef;
+
+    private  int PICK_IMAGE = 100;
     Uri imageUri;
     private static long back_pressed ;
 
@@ -29,17 +48,37 @@ public class FinishingRegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finishing_registration);
 
+        mAuth = FirebaseAuth.getInstance();
+        curUser = mAuth.getCurrentUser();
+
+        progressDialog = new ProgressDialog(this);
+
         btnRegis2ChangeIcon = (ImageButton) findViewById(R.id.btnRegis2ChangeIcon);
         imgRegis2StoreIcon = (ImageView) findViewById(R.id.imgRegis2StoreIcon);
         txtRegis2StoreName = (TextView) findViewById(R.id.txtRegis2StoreName);
         btnFinsihingDone = (Button) findViewById(R.id.btnFinsihingDone);
 
+        if(curUser != null){
+            txtRegis2StoreName.setText(curUser.getDisplayName());
+            //mStorageRef = FirebaseStorage.getInstance().getReference("profilepics/"+curUser.getPhoneNumber()+".jpg");
+
+
+        }
         btnRegis2ChangeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openGallery();
             }
         });
+        btnFinsihingDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressDialog.setMessage("Please Wait");
+                progressDialog.show();
+                uploadImageToFirebaseStorage();
+            }
+        });
+
     }
 
     private void openGallery(){
@@ -53,7 +92,29 @@ public class FinishingRegistrationActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK && requestCode == PICK_IMAGE){
             imageUri = data.getData();
             imgRegis2StoreIcon.setImageURI(imageUri);
+
         }
+    }
+
+    private void uploadImageToFirebaseStorage() {
+        StorageReference profile = FirebaseStorage.getInstance().getReference("/profilepics/"+"thomas.jpg");
+
+        profile.putFile(imageUri).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                progressDialog.dismiss();
+                Toast.makeText(FinishingRegistrationActivity.this,"Fail Upload Image", Toast.LENGTH_LONG).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+                progressDialog.dismiss();
+                Toast.makeText(FinishingRegistrationActivity.this,"Success Upload Image", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void doneRegister(View v){
