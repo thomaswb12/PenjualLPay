@@ -29,8 +29,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryH
     @Override
     public void onBindViewHolder(@NonNull HistoryAdapter.HistoryHolder historyHolder, int i) {
         History history = listHistory.get(i);
-        historyHolder.txtHarga.setText(""+history.harga);
+        historyHolder.txtHarga.setText("Rp "+history.harga);
         historyHolder.txtTanggal.setText(history.tglTransaksi);
+        historyHolder.txtPelaku.setText(history.pelaku);
+        historyHolder.txtNoTransaksi.setText("" + history.noTransaksi);
     }
 
     @Override
@@ -39,13 +41,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryH
     }
 
     public class HistoryHolder extends RecyclerView.ViewHolder{
-        public TextView txtTanggal, txtHarga;
+        public TextView txtTanggal, txtHarga, txtPelaku, txtNoTransaksi;
 
         public HistoryHolder(View itemView) {
             super(itemView);
             txtTanggal = itemView.findViewById(R.id.txtTanggal);
             txtHarga = itemView.findViewById(R.id.txtHarga);
-
+            txtPelaku = itemView.findViewById(R.id.txtNomor);
+            txtNoTransaksi = itemView.findViewById(R.id.txtNomorTransaksi);
         }
     }
 }

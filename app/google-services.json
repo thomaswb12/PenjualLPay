@@ -67,6 +67,14 @@
           }
         },
         {
+          "client_id": "751604038091-s7cjq44ig7i9ib1i4snc49jff1urb3eh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.thomas.penjuallpay",
+            "certificate_hash": "46ea0cf3168d1d6ddc85b55497ea80abfaeebead"
+          }
+        },
+        {
           "client_id": "751604038091-rjugb7u0od6bv93tutk48hj2qo1banoq.apps.googleusercontent.com",
           "client_type": 3
         }

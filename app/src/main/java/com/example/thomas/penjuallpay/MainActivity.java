@@ -15,6 +15,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     public Button btnHomeWithdraw;
@@ -65,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
         transaction.commit();
-
-
     }
 
     public void toTransaksi(View v){
@@ -101,4 +109,5 @@ public class MainActivity extends AppCompatActivity {
         }
         back_pressed = System.currentTimeMillis();
     }
+
 }
