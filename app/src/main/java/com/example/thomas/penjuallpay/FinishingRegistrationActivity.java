@@ -1,13 +1,23 @@
 package com.example.thomas.penjuallpay;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -23,6 +33,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+
+import id.zelory.compressor.Compressor;
 
 
 public class FinishingRegistrationActivity extends AppCompatActivity {
@@ -41,6 +60,7 @@ public class FinishingRegistrationActivity extends AppCompatActivity {
 
     private  int PICK_IMAGE = 100;
     Uri imageUri;
+    byte[] gambar;
     private static long back_pressed ;
 
     @Override
@@ -91,15 +111,30 @@ public class FinishingRegistrationActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode == PICK_IMAGE){
             imageUri = data.getData();
-            imgRegis2StoreIcon.setImageURI(imageUri);
-
+            gambar = convertImageToByte(imageUri);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(gambar, 0, gambar.length);
+            imgRegis2StoreIcon.setImageBitmap(bitmap);
         }
+    }
+
+    public byte[] convertImageToByte(Uri uri){
+        byte[] data = null;
+        try {
+            ContentResolver cr = getBaseContext().getContentResolver();
+            InputStream inputStream = cr.openInputStream(uri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+            data = baos.toByteArray();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return data;
     }
 
     private void uploadImageToFirebaseStorage() {
         StorageReference profile = FirebaseStorage.getInstance().getReference("/profilepics/"+"thomas.jpg");
-
-        profile.putFile(imageUri).addOnFailureListener(new OnFailureListener() {
+        profile.putBytes(gambar).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
