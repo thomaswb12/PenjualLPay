@@ -130,11 +130,12 @@ public class RegistrationActivity extends AppCompatActivity {
             if (e instanceof FirebaseAuthInvalidCredentialsException) {
                 // Invalid request
                 // ...
-                Toast.makeText(RegistrationActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistrationActivity.this,"Failed",Toast.LENGTH_LONG).show();
             } else if (e instanceof FirebaseTooManyRequestsException) {
                 // The SMS quota for the project has been exceeded
                 // ...
-                Toast.makeText(RegistrationActivity.this,"Too Many Attempt",Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                Toast.makeText(RegistrationActivity.this,"Too Many Attempt",Toast.LENGTH_LONG).show();
             }
 
             // Show a message and update the UI
