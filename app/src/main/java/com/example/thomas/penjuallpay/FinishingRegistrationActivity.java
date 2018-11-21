@@ -26,10 +26,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.thomas.penjuallpay.Model.AuthUser;
+import com.example.thomas.penjuallpay.Model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -138,16 +145,40 @@ public class FinishingRegistrationActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
+                Toast.makeText(FinishingRegistrationActivity.this,exception.getMessage(), Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
-                Toast.makeText(FinishingRegistrationActivity.this,"Fail Upload Image", Toast.LENGTH_LONG).show();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
-                progressDialog.dismiss();
                 Toast.makeText(FinishingRegistrationActivity.this,"Success Upload Image", Toast.LENGTH_LONG).show();
+                UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
+                        .setPhotoUri(imageUri)
+                        .build();
+                curUser.updateProfile(profile)
+                        .addOnCompleteListener(new OnCompleteListener<Void>(){
+
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    progressDialog.dismiss();
+                                    Toast.makeText(FinishingRegistrationActivity.this,"Profile Updated",Toast.LENGTH_SHORT).show();
+//
+                                    AuthUser user = new AuthUser();
+                                    user.newUser();
+
+                                    Intent intent = new Intent(FinishingRegistrationActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }
+                                else {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(FinishingRegistrationActivity.this,"Error",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                //progressDialog.dismiss();
             }
         });
     }
