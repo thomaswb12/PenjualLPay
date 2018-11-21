@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
         tvHomeName.setText(authUser.getUserName());
         tvHomeEmail.setText(authUser.getUserEmail());
         tvHomePhone.setText(authUser.getUserPhone());
-        tvHomeSaldo.setText(authUser.getUserSaldoRp());
+        //tvHomeSaldo.setText(authUser.getUserSaldoRp());
 
         return v;
     }
