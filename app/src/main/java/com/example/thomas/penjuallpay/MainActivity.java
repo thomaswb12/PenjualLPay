@@ -33,21 +33,12 @@ public class MainActivity extends AppCompatActivity {
 
     public Button btnHomeWithdraw;
     private FloatingActionButton fab;
-    private TextView tvHomeEmail;
-    private TextView tvHomePhone;
-    private TextView tvHomeName;
     private static long back_pressed ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        tvHomeEmail = findViewById(R.id.tvHomeEmail);
-        tvHomeName = findViewById(R.id.tvHomeName);
-        tvHomePhone = findViewById(R.id.tvHomePhone);
-
-
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.nvHome);

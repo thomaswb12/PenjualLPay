@@ -17,7 +17,7 @@ public class User {
         this.saldo = saldo;
     }
 
-    public Double getSaldo(){
+    public Double getSaldo() {
         return saldo;
     }
 }

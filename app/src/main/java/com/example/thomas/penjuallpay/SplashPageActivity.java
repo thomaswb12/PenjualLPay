@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,8 +31,11 @@ public class SplashPageActivity extends AppCompatActivity {
                     Intent homeIntent = new Intent(SplashPageActivity.this, LoginActivity.class);
                     startActivity(homeIntent);
                     finish();
+                    //Toast.makeText(SplashPageActivity.this,"Ga ada user",Toast.LENGTH_LONG);
+
                 }
                 else{
+                    //Toast.makeText(SplashPageActivity.this,"Ga ada user",Toast.LENGTH_LONG);
                     Intent homeIntent = new Intent(SplashPageActivity.this, MainActivity.class);
                     startActivity(homeIntent);
                     finish();
