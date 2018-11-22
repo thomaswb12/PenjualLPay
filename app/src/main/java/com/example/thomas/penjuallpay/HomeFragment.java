@@ -32,7 +32,9 @@ import java.util.Map;
 public class HomeFragment extends Fragment {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser curUser = mAuth.getCurrentUser();
-    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Seller/"+curUser.getUid());
+    //private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Seller/"+curUser.getUid());
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Seller").child(curUser.getUid());
+
     private ValueEventListener valueEvent;
     private User user;
     private TextView tvHomeSaldo;
@@ -53,8 +55,9 @@ public class HomeFragment extends Fragment {
         valueEvent = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                user = dataSnapshot.getValue(User.class);
-                //tvHomeSaldo.setText("Rp. "+ user.getSaldo().toString());
+                //user = dataSnapshot.getValue(User.class);
+                user = new User(Double.valueOf(dataSnapshot.child("saldo").getValue().toString())); //pake constructor -> User(Double saldo)
+                tvHomeSaldo.setText("Rp. "+ user.getSaldo().toString());
             }
 
             @Override
