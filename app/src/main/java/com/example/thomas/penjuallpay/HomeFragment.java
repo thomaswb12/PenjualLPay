@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
-                tvHomeSaldo.setText("Rp. "+ user.getSaldo().toString());
+                //tvHomeSaldo.setText("Rp. "+ user.getSaldo().toString());
             }
 
             @Override
