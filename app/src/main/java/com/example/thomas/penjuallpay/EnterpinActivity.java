@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EnterpinActivity extends AppCompatActivity {
     public ImageView btnEnterpinOk;
@@ -23,6 +24,12 @@ public class EnterpinActivity extends AppCompatActivity {
     public Button btnEnterpin9;
 
     public TextView txtEnterpinPin;
+    public TextView txtEnterpinTitle;
+    private enum state{CreateNewPin, ConfirmNewPin, ConfirmWithdraw};
+    private state myState = state.CreateNewPin;
+
+    private String myPin;
+    private String myPinTamp="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,7 @@ public class EnterpinActivity extends AppCompatActivity {
         btnEnterpinOk = (ImageView) findViewById(R.id.btnEnterpinOk);
         btnEnterpinDelete = (ImageView) findViewById(R.id.btnEnterpinDelete);
         txtEnterpinPin = (TextView) findViewById(R.id.txtEnterpinPin);
+        txtEnterpinTitle = (TextView) findViewById(R.id.txtEnterpinTitle);
 
         btnEnterpin0 = (Button) findViewById(R.id.btnEnterpin0);
         btnEnterpin1 = (Button) findViewById(R.id.btnEnterpin1);
@@ -47,8 +55,32 @@ public class EnterpinActivity extends AppCompatActivity {
         btnEnterpinOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EnterpinActivity.this, MainActivity.class);
-                startActivity(intent);
+                if(myState == state.CreateNewPin){
+                    if(txtEnterpinPin.getText().toString().length()==6){
+                        myPin = myPinTamp;
+                        txtEnterpinPin.setText("");
+                        myPinTamp="";
+                        txtEnterpinTitle.setText("Confirm Your New PIN");
+                        myState = state.ConfirmNewPin;
+                    }
+                    else{
+                        Toast.makeText(EnterpinActivity.this, "PIN must be 6 characters", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else if (myState == state.ConfirmNewPin){
+                    if(! myPin.equals(myPinTamp)){
+                        Toast.makeText(EnterpinActivity.this, "You input a wrong PIN", Toast.LENGTH_SHORT).show();
+                        txtEnterpinPin.setText("");
+                        myPinTamp="";
+                    }
+                    else{
+                        Intent intent = new Intent(EnterpinActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                }
+                else if (myState == state.ConfirmWithdraw){
+                    //isi nanti yaa
+                }
             }
         });
 
@@ -56,6 +88,7 @@ public class EnterpinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(txtEnterpinPin.getText().toString().length()>0){
+                    myPinTamp = myPinTamp.substring(0,myPinTamp.length()-1);
                     txtEnterpinPin.setText((txtEnterpinPin.getText().toString()).substring(0,(txtEnterpinPin.getText().toString()).length()-1));
                 }
             }
@@ -64,7 +97,8 @@ public class EnterpinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(txtEnterpinPin.getText().toString().length()<6){
-                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"0");
+                    myPinTamp += "0";
+                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"*");
                 }
             }
         });
@@ -72,7 +106,8 @@ public class EnterpinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(txtEnterpinPin.getText().toString().length()<6){
-                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"1");
+                    myPinTamp += "1";
+                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"*");
                 }
             }
         });
@@ -80,7 +115,8 @@ public class EnterpinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(txtEnterpinPin.getText().toString().length()<6){
-                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"2");
+                    myPinTamp += "2";
+                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"*");
                 }
             }
         });
@@ -88,7 +124,8 @@ public class EnterpinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(txtEnterpinPin.getText().toString().length()<6){
-                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"3");
+                    myPinTamp += "3";
+                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"*");
                 }
             }
         });
@@ -96,7 +133,8 @@ public class EnterpinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(txtEnterpinPin.getText().toString().length()<6){
-                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"4");
+                    myPinTamp += "4";
+                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"*");
                 }
             }
         });
@@ -104,7 +142,8 @@ public class EnterpinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(txtEnterpinPin.getText().toString().length()<6){
-                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"5");
+                    myPinTamp += "5";
+                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"*");
                 }
             }
         });
@@ -112,7 +151,8 @@ public class EnterpinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(txtEnterpinPin.getText().toString().length()<6){
-                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"6");
+                    myPinTamp += "6";
+                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"*");
                 }
             }
         });
@@ -120,7 +160,8 @@ public class EnterpinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(txtEnterpinPin.getText().toString().length()<6){
-                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"7");
+                    myPinTamp += "7";
+                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"*");
                 }
             }
         });
@@ -128,7 +169,8 @@ public class EnterpinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(txtEnterpinPin.getText().toString().length()<6){
-                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"8");
+                    myPinTamp += "8";
+                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"*");
                 }
             }
         });
@@ -136,9 +178,23 @@ public class EnterpinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(txtEnterpinPin.getText().toString().length()<6){
-                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"9");
+                    myPinTamp += "9";
+                    txtEnterpinPin.setText((txtEnterpinPin.getText().toString())+"*");
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(myState == state.ConfirmNewPin){
+            myPin = "";
+            myPinTamp="";
+            txtEnterpinTitle.setText("Create New PIN");
+            txtEnterpinPin.setText("");
+            myState = state.CreateNewPin;
+        }
+        else
+            super.onBackPressed();
     }
 }
