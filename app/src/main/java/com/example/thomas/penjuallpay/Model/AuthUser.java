@@ -18,8 +18,8 @@ public class AuthUser {
     }
 
     public void newUser(){
-        user= new User(10000.0);
-        mDatabase.child("users").child(curUSer.getUid()).setValue(user);
+        //user= new User(10000.0);
+        //mDatabase.child("users").child(curUSer.getUid()).setValue(user);
     }
 
     public String getUserEmail(){

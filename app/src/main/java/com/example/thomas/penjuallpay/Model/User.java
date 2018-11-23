@@ -7,17 +7,25 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class User {
     private Double saldo;
+    private String noPin;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
 
     }
 
-    public User(Double saldo) {
+    public User(Double saldo, String noPin) {
         this.saldo = saldo;
+        this.noPin = noPin;
     }
+
 
     public Double getSaldo() {
         return saldo;
     }
+
+    public String getNoPin() {
+        return noPin;
+    }
+
 }

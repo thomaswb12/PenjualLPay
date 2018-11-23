@@ -32,6 +32,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,6 +162,7 @@ public class RegistrationActivity extends AppCompatActivity {
             intent.putExtra("storeName",storeName);
             intent.putExtra("storeEmail",storeEmail);
             intent.putExtra("storePassword",storePassword);
+            intent.putExtra("context","Regis");
 
             startActivity(intent);
 
