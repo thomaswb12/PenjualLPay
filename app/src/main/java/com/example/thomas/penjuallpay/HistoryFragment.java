@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 
 import com.example.thomas.penjuallpay.Model.History;
 import com.google.firebase.auth.FirebaseAuth;
@@ -117,6 +120,12 @@ public class HistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_history, container, false);
 
+        ViewPager viewPager = (ViewPager) v.findViewById(R.id.viewPager);
+        setupViewPager(viewPager);
+        // Set Tabs inside Toolbar
+        TabLayout tabs = (TabLayout) v.findViewById(R.id.tabLayout);
+        tabs.setupWithViewPager(viewPager);
+
         rcyHistory = v.findViewById(R.id.rcyHistory);
 
         Context context = getActivity();
@@ -131,4 +140,14 @@ public class HistoryFragment extends Fragment {
         return v;
     }
 
+    private void setupViewPager(ViewPager viewPager) {
+
+
+        TabAdapter adapter = new TabAdapter(getChildFragmentManager());
+        adapter.addFragment(new HistoryJualBeliFragment(), "Jual Beli");
+        adapter.addFragment(new HistoryWithdrawFragment(), "Withdraw");
+        viewPager.setAdapter(adapter);
+    }
 }
+
+
