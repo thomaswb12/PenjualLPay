@@ -19,6 +19,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class EnterpinActivity extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser curUser = mAuth.getCurrentUser();
@@ -121,6 +125,7 @@ public class EnterpinActivity extends AppCompatActivity {
                         //currentSaldo nya dikurangi amount(amount dapet dari extra)
                         myCurrentSaldo = myCurrentSaldo-withdrawAmount;
                         mDatabase.child("saldo").setValue(myCurrentSaldo);
+                        uploadWithdrawTransaction(withdrawAmount);
                         Intent intent = new Intent(EnterpinActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
@@ -280,5 +285,15 @@ public class EnterpinActivity extends AppCompatActivity {
     protected void onStop() {
         mDatabase.removeEventListener(valueEvent);
         super.onStop();
+    }
+
+    public void uploadWithdrawTransaction(Double withdrawAmount){
+        SimpleDateFormat simpledateformat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");;
+        String waktu = simpledateformat.format(Calendar.getInstance().getTime());
+
+        DatabaseReference mDBWithdraw = FirebaseDatabase.getInstance().getReference().child("transaksi").child("seller").child("withdraw").child(curUser.getUid());
+        String idTransaksiWithdraw = FirebaseDatabase.getInstance().getInstance().getReference("transaksi").child("seller").child("withdraw").child(curUser.getUid()).push().getKey();
+        mDBWithdraw.child(idTransaksiWithdraw).child("total").setValue(withdrawAmount);
+        mDBWithdraw.child(idTransaksiWithdraw).child("waktu").setValue(waktu);
     }
 }

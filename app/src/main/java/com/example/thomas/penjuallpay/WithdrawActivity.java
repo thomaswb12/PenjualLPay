@@ -53,8 +53,8 @@ public class WithdrawActivity extends AppCompatActivity {
         }
         else{
             Double ballanceForWithdraw = Double.parseDouble(txtWithdrawAmount.getText().toString());
-            if(ballanceForWithdraw<50000){
-                Toast.makeText(this, "withdraw amount must greater than Rp 50.000", Toast.LENGTH_LONG).show();
+            if(ballanceForWithdraw<10000){
+                Toast.makeText(this, "withdraw amount must greater than Rp 10.000", Toast.LENGTH_LONG).show();
             }
             else if (ballanceForWithdraw > currentBallance){
                 Toast.makeText(this, "Your ballance not enough", Toast.LENGTH_LONG).show();

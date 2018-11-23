@@ -88,7 +88,7 @@
                 android:id="@+id/txtWithdrawMinimum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Minimum withdraw Rp 50.000,00"
+                android:text="Minimum withdraw Rp 10.000,00"
                 android:textStyle="italic" />
 
         </LinearLayout>
