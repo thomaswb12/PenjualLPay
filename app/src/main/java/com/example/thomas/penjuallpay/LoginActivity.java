@@ -211,7 +211,7 @@ public class LoginActivity extends AppCompatActivity {
                             //Log.d(TAG, "signInWithCredential:success");
 
                             FirebaseUser user = task.getResult().getUser();
-                            
+
                             // ...
                         } else {
                             // Sign in failed, display a message and update the UI
