@@ -26,6 +26,9 @@ public class EnterpinActivity extends AppCompatActivity {
 
     private ValueEventListener valueEvent;
     private User user;
+    private String myCurrentPin;
+    private Double myCurrentSaldo;
+    private Double withdrawAmount;
 
     private static long back_pressed ;
 
@@ -58,6 +61,7 @@ public class EnterpinActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int stateFromExtra = intent.getIntExtra("state",0);
         myState = state.values()[stateFromExtra];
+        withdrawAmount = intent.getDoubleExtra("withdrawAmount",0.0);
 
         btnEnterpinOk = (ImageView) findViewById(R.id.btnEnterpinOk);
         btnEnterpinDelete = (ImageView) findViewById(R.id.btnEnterpinDelete);
@@ -112,12 +116,17 @@ public class EnterpinActivity extends AppCompatActivity {
                     }
                 }
                 else if (myState == state.ConfirmWithdraw){
-                    //isi nanti yaa
-                    //tambahin->if PIN-nya benar dari class user
-                    Intent intent = new Intent(EnterpinActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    //tambahin->else PIN-nya salah
-                    //tambahin->Toast.makeText(EnterpinActivity.this,"You input a wrong PIN",Toast.LENGTH_LONG).show();
+                    myPin = myPinTamp;
+                    if(myCurrentPin.equals(myPin)){
+                        //currentSaldo nya dikurangi amount(amount dapet dari extra)
+                        myCurrentSaldo = myCurrentSaldo-withdrawAmount;
+                        mDatabase.child("saldo").setValue(myCurrentSaldo);
+                        Intent intent = new Intent(EnterpinActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(EnterpinActivity.this, "You input a wrong PIN", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -255,6 +264,8 @@ public class EnterpinActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
+                myCurrentPin = user.getNoPin();
+                myCurrentSaldo = user.getSaldo();
             }
 
             @Override
