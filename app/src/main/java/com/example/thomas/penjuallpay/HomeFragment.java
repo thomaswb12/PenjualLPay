@@ -1,6 +1,7 @@
 package com.example.thomas.penjuallpay;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +23,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -32,12 +37,12 @@ import java.util.Map;
 public class HomeFragment extends Fragment {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser curUser = mAuth.getCurrentUser();
-    //private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Seller/"+curUser.getUid());
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Seller").child(curUser.getUid());
 
     private ValueEventListener valueEvent;
     private User user;
     private TextView tvHomeSaldo;
+    private ImageView imgHomeStoreLogo;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -77,6 +82,7 @@ public class HomeFragment extends Fragment {
         TextView tvHomeName = (TextView) v.findViewById(R.id.tvHomeName);
         TextView tvHomeEmail = (TextView) v.findViewById(R.id.tvHomeEmail);
         TextView tvHomePhone = (TextView) v.findViewById(R.id.tvHomePhone);
+        imgHomeStoreLogo = (ImageView) v.findViewById(R.id.imgHomeStoreLogo);
         tvHomeSaldo = v.findViewById(R.id.tvHomeSaldo);
 
 
@@ -87,7 +93,7 @@ public class HomeFragment extends Fragment {
         tvHomePhone.setText(curUser.getPhoneNumber());
         //tvHomeSaldo.setText(""+user.getSaldo());
 
+
         return v;
     }
-
 }
