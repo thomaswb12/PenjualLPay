@@ -163,7 +163,8 @@ public class VerificationNumberActivity extends AppCompatActivity {
                                                                                             mDatabase.child("Seller").child(mAuth.getCurrentUser().getUid()).setValue(user);
 
 
-                                                                                            Intent intent = new Intent(VerificationNumberActivity.this, FinishingRegistrationActivity.class);
+                                                                                            Intent intent = new Intent(VerificationNumberActivity.this, EnterpinActivity.class);
+                                                                                            intent.putExtra("state",0);
                                                                                             startActivity(intent);
                                                                                         }
                                                                                         catch (NoSuchAlgorithmException e) {

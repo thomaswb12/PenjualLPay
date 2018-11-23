@@ -2,6 +2,7 @@ package com.example.thomas.penjuallpay;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +10,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.thomas.penjuallpay.Model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class EnterpinActivity extends AppCompatActivity {
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser curUser = mAuth.getCurrentUser();
+    //private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Seller/"+curUser.getUid());
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Seller").child(curUser.getUid());
+
+    private ValueEventListener valueEvent;
+    private User user;
+
     public ImageView btnEnterpinOk;
     public ImageView btnEnterpinDelete;
     public Button btnEnterpin0;
@@ -86,7 +104,8 @@ public class EnterpinActivity extends AppCompatActivity {
                         myPinTamp="";
                     }
                     else{
-                        Intent intent = new Intent(EnterpinActivity.this, MainActivity.class);
+                        //tambah-> simpen pin baru ke user
+                        Intent intent = new Intent(EnterpinActivity.this, FinishingRegistrationActivity.class);
                         startActivity(intent);
                     }
                 }
@@ -213,5 +232,28 @@ public class EnterpinActivity extends AppCompatActivity {
         }
         else
             super.onBackPressed();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        valueEvent = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                user = dataSnapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        mDatabase.addValueEventListener(valueEvent);
+    }
+
+    @Override
+    protected void onStop() {
+        mDatabase.removeEventListener(valueEvent);
+        super.onStop();
     }
 }
