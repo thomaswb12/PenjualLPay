@@ -6,14 +6,26 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 public class TransaksiActivity extends AppCompatActivity {
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private String idTransaksi;
+    private String totalPrice;
+
+    public EditText edtTransaksiIdTransaksi;
+    public EditText edtTransaksiTotalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaksi);
+
+        edtTransaksiIdTransaksi = (EditText) findViewById(R.id.edtTransaksiIdTransaksi);
+        edtTransaksiTotalPrice = (EditText) findViewById(R.id.edtTransaksiTotalPrice);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar); // get the reference of Toolbar
         setSupportActionBar(toolbar); // Setting/replace toolbar as the ActionBar
@@ -28,6 +40,8 @@ public class TransaksiActivity extends AppCompatActivity {
                 back();
             }
         });
+        idTransaksi = database.getInstance().getReference("transaksi").child("dummy").push().getKey(); //bikin id transaksi jualbeli
+        edtTransaksiIdTransaksi.setText(idTransaksi); //masukkan id transaksi ke edit text Id Transaksi
     }
 
     public void back(){
@@ -39,6 +53,9 @@ public class TransaksiActivity extends AppCompatActivity {
 
     public void toQR(View v){
         Intent intent = new Intent(this,QRActivity.class);
+        intent.putExtra("idTransaksi",idTransaksi); //kirim ID transaksi yang sudah dibuat
+        totalPrice = edtTransaksiTotalPrice.getText().toString();
+        intent.putExtra("totalPrice",totalPrice); //kirim total harga yang sudah diinputkan
         startActivity(intent);
 
        this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

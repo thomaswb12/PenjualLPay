@@ -11,25 +11,54 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.thomas.penjuallpay.Model.DummyTransaction;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-public class QRActivity extends AppCompatActivity {
+import java.util.Calendar;
+import java.util.Date;
 
-    EditText edtText;
+public class QRActivity extends AppCompatActivity {
+    private String idTransaksi;
+    private String totalPrice;
+
+    EditText edtIDTransaksiFB;
+    EditText edtQRTotalPrice;
     ImageView imgQR;
+    DummyTransaction dummyTransaction;
+    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
 
-        edtText = findViewById(R.id.edtIDTransaksiFB);
+        //sambungkan dengan xml
+        edtIDTransaksiFB = findViewById(R.id.edtIDTransaksiFB);
+        edtQRTotalPrice = findViewById(R.id.edtQRTotalPrice);
+
+        //dapatkan extra dari page TransaksiActivity
+        Bundle extras = getIntent().getExtras();
+        idTransaksi = extras.getString("idTransaksi");
+        totalPrice = extras.getString("totalPrice");
+
+        //tampilkan extra ke xml
+        edtIDTransaksiFB.setText(idTransaksi);
+        edtQRTotalPrice.setText(totalPrice);
+
+        //buat class DummyTransaction
+        String myUID = currentFirebaseUser.getUid();
+        dummyTransaction = new DummyTransaction(Integer.parseInt(totalPrice), idTransaksi, myUID);
+
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try{
-            BitMatrix bitMatrix = multiFormatWriter.encode(edtText.getText().toString(),BarcodeFormat.QR_CODE,200,200);
+            //buat QR dengan pesan didalamnya adalah idTransaksi
+            BitMatrix bitMatrix = multiFormatWriter.encode(idTransaksi,BarcodeFormat.QR_CODE,200,200);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             imgQR = (ImageView) findViewById(R.id.imgQR);
