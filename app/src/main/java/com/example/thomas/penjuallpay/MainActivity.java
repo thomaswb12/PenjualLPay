@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public Button btnHomeWithdraw;
     private FloatingActionButton fab;
     private static long back_pressed ;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logout(View v){
+        mAuth.signOut();
         Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
 

@@ -3,18 +3,34 @@ package com.example.thomas.penjuallpay;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
@@ -22,19 +38,89 @@ public class LoginActivity extends AppCompatActivity {
     public Button btnLoginRegister;
     private EditText edtLoginPhoneNumber;
     private ProgressDialog progressDialog;
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("ListPhone");
+    private boolean exist = false;
+    private HashMap<String, Boolean> hm;
+
+    private ValueEventListener valueEvent;
 
     private static long back_pressed ;
 
+
     @Override
+    public void onStart() {
+        super.onStart();
+        valueEvent = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                hm = (HashMap) dataSnapshot.getValue();
+                if(progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                Toast.makeText(LoginActivity.this, "sds",Toast.LENGTH_LONG).show();
+                /*
+                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    HashMap
+                    Toast.makeText(LoginActivity.this, dataSnapshot1.getKey(),Toast.LENGTH_LONG).show();
+                }*/
+                //hm = (HashMap) dataSnapshot.getValue();
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        mDatabase.addValueEventListener(valueEvent);
+    }
+
+    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activiy_login);
+
 
         btnLoginLogin = (Button) findViewById(R.id.btnLoginLogin);
         btnLoginRegister = (Button) findViewById(R.id.btnLoginRegister);
         edtLoginPhoneNumber = findViewById(R.id.edtLoginPhoneNumber);
         progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please Wait");
+        progressDialog.show();
 
+
+        edtLoginPhoneNumber.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                try{
+                    if(hm.get(s.toString())){
+                        Toast.makeText(LoginActivity.this,""+hm.get("+6289521337118"),Toast.LENGTH_LONG).show();
+                        exist = true;
+                    }
+                }catch (Exception e){
+                    Toast.makeText(LoginActivity.this,"false",Toast.LENGTH_LONG).show();
+                    exist = false;
+                }
+                if(!s.equals("") ) {
+                     //cekExist(s.toString());
+                    //do your work here
+                }
+            }
+
+
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         btnLoginRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,21 +135,25 @@ public class LoginActivity extends AppCompatActivity {
         btnLoginLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.setMessage("Please Wait");
-                progressDialog.show();
-                login();
-
-
+                if(exist == true){
+                    progressDialog.setMessage("Please Wait");
+                    progressDialog.show();
+                    login();
+                }
+                else{
+                    Toast.makeText(LoginActivity.this,"no telepon tidak valid",Toast.LENGTH_SHORT).show();
+                }
 //                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 //                startActivity(intent);
             }
         });
 
-
     }
 
     public void login(){
+        //FirebaseAuth.getInstance().
         String noTelp = edtLoginPhoneNumber.getText().toString();
+        //Toast.makeText(this,noTelp,Toast.LENGTH_LONG).show();
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 noTelp,        // Phone number to verify
                 60,                 // Timeout duration
@@ -82,6 +172,12 @@ public class LoginActivity extends AppCompatActivity {
             // 2 - Auto-retrieval. On some devices Google Play services can automatically
             //     detect the incoming verification SMS and perform verification without
             //     user action.
+
+
+
+            Toast.makeText(LoginActivity.this,"Sukses",Toast.LENGTH_LONG).show();
+
+            progressDialog.dismiss();
         }
 
         @Override
@@ -103,23 +199,31 @@ public class LoginActivity extends AppCompatActivity {
             // Show a message and update the UI
             // ...
         }
-
-        @Override
-        public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken token) {
-            // The SMS verification code has been sent to the provided phone number, we
-            // now need to ask the user to enter the code and then construct a credential
-            // by combining the code with a verification ID.
-            //Log.d(TAG, "onCodeSent:" + verificationId);
-            super.onCodeSent(verificationId,token);
-            progressDialog.dismiss();
-            Intent intent = new Intent(LoginActivity.this, VerificationNumberActivity.class);
-            intent.putExtra("Code",verificationId);
-            intent.putExtra("context","Login");
-            startActivity(intent);
-
-            // ...
-        }
     };
+
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        FirebaseAuth.getInstance().signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            //Log.d(TAG, "signInWithCredential:success");
+
+                            FirebaseUser user = task.getResult().getUser();
+                            
+                            // ...
+                        } else {
+                            // Sign in failed, display a message and update the UI
+                            //Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                // The verification code entered was invalid
+                            }
+                        }
+                    }
+                });
+    }
+
 
 
     @Override

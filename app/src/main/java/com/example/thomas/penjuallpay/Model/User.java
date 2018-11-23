@@ -8,13 +8,14 @@ import com.google.firebase.database.FirebaseDatabase;
 public class User {
     private Double saldo;
     private String noPin;
+    private String password;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
 
     }
 
-    public User(Double saldo, String noPin) {
+    public User(Double saldo, String noPin, String password) {
         this.saldo = saldo;
         this.noPin = noPin;
     }
@@ -28,4 +29,7 @@ public class User {
         return noPin;
     }
 
+    public String getPassword() {
+        return password;
+    }
 }
