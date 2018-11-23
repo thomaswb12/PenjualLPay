@@ -22,11 +22,12 @@ import com.google.firebase.database.ValueEventListener;
 public class EnterpinActivity extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser curUser = mAuth.getCurrentUser();
-    //private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Seller/"+curUser.getUid());
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Seller").child(curUser.getUid());
 
     private ValueEventListener valueEvent;
     private User user;
+
+    private static long back_pressed ;
 
     public ImageView btnEnterpinOk;
     public ImageView btnEnterpinDelete;
@@ -104,7 +105,8 @@ public class EnterpinActivity extends AppCompatActivity {
                         myPinTamp="";
                     }
                     else{
-                        //tambah-> simpen pin baru ke user
+                        //simpen pin baru ke user
+                        mDatabase.child("noPin").setValue(myPin);
                         Intent intent = new Intent(EnterpinActivity.this, FinishingRegistrationActivity.class);
                         startActivity(intent);
                     }
@@ -229,6 +231,18 @@ public class EnterpinActivity extends AppCompatActivity {
             txtEnterpinTitle.setText("Create New PIN");
             txtEnterpinPin.setText("");
             myState = state.CreateNewPin;
+        }
+        else if (myState == state.CreateNewPin){
+            if (back_pressed + 2000 > System.currentTimeMillis()){
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.addFlags((Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                startActivity(intent);
+                finish();
+            } else{
+                Toast.makeText(this, "Press once again to exit",Toast.LENGTH_SHORT).show();
+            }
+            back_pressed = System.currentTimeMillis();
         }
         else
             super.onBackPressed();
