@@ -70,6 +70,8 @@ public class FinishingRegistrationActivity extends AppCompatActivity {
     byte[] gambar;
     private static long back_pressed ;
 
+    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,7 +142,7 @@ public class FinishingRegistrationActivity extends AppCompatActivity {
     }
 
     private void uploadImageToFirebaseStorage() {
-        StorageReference profile = FirebaseStorage.getInstance().getReference("/profilepics/"+"thomas.jpg");
+        StorageReference profile = FirebaseStorage.getInstance().getReference("/profilepics/"+currentFirebaseUser.getUid()+".jpg");
         profile.putBytes(gambar).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {

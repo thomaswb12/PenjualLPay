@@ -2,6 +2,7 @@ package com.example.thomas.penjuallpay;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,8 +13,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.thomas.penjuallpay.Model.DummyTransaction;
+import com.example.thomas.penjuallpay.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -26,12 +33,18 @@ import java.util.Date;
 public class QRActivity extends AppCompatActivity {
     private String idTransaksi;
     private String totalPrice;
+    private String myStoreName;
+    private String myPhotoUrl;
+    private User user;
 
     EditText edtIDTransaksiFB;
     EditText edtQRTotalPrice;
     ImageView imgQR;
     DummyTransaction dummyTransaction;
     FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+    FirebaseDatabase database =  FirebaseDatabase.getInstance();
+    String myUID = currentFirebaseUser.getUid();
+    private ValueEventListener valueEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +65,12 @@ public class QRActivity extends AppCompatActivity {
         edtQRTotalPrice.setText(totalPrice);
 
         //buat class DummyTransaction
-        String myUID = currentFirebaseUser.getUid();
-        dummyTransaction = new DummyTransaction(Integer.parseInt(totalPrice), idTransaksi, myUID);
+        myStoreName = currentFirebaseUser.getDisplayName();
+        myPhotoUrl = "/profilepics/"+currentFirebaseUser.getUid()+".jpg";
+        dummyTransaction = new DummyTransaction(Integer.parseInt(totalPrice),myStoreName,myPhotoUrl);
+        //kirim ke db Dummy
+        DatabaseReference mRefTransactionDummy =  database.getReference().child("transaksi").child("dummy").child(idTransaksi);
+        mRefTransactionDummy.setValue(dummyTransaction);
 
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try{
