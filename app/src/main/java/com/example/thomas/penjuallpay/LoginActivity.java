@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.thomas.penjuallpay.Model.Password;
+import com.example.thomas.penjuallpay.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -30,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -37,10 +40,15 @@ public class LoginActivity extends AppCompatActivity {
     public Button btnLoginLogin;
     public Button btnLoginRegister;
     private EditText edtLoginPhoneNumber;
+    private EditText edtLoginPassword;
     private ProgressDialog progressDialog;
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("ListPhone");
+    private DatabaseReference mSeller = FirebaseDatabase.getInstance().getReference("Seller");
     private boolean exist = false;
     private HashMap<String, Boolean> hm;
+    private User user1;
+    private FirebaseUser user;
+    private boolean correct = false;
 
     private ValueEventListener valueEvent;
 
@@ -58,14 +66,6 @@ public class LoginActivity extends AppCompatActivity {
                     progressDialog.dismiss();
 
                 Toast.makeText(LoginActivity.this, "sds",Toast.LENGTH_LONG).show();
-                /*
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    HashMap
-                    Toast.makeText(LoginActivity.this, dataSnapshot1.getKey(),Toast.LENGTH_LONG).show();
-                }*/
-                //hm = (HashMap) dataSnapshot.getValue();
-
-
             }
 
             @Override
@@ -74,6 +74,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
         mDatabase.addValueEventListener(valueEvent);
+    }
+
+    @Override
+    protected void onStop() {
+        mDatabase.removeEventListener(valueEvent);
+        super.onStop();
     }
 
     @Override
@@ -86,12 +92,19 @@ public class LoginActivity extends AppCompatActivity {
         btnLoginLogin = (Button) findViewById(R.id.btnLoginLogin);
         btnLoginRegister = (Button) findViewById(R.id.btnLoginRegister);
         edtLoginPhoneNumber = findViewById(R.id.edtLoginPhoneNumber);
+        edtLoginPassword = findViewById(R.id.edtLoginPassword);
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please Wait");
         progressDialog.show();
 
 
         edtLoginPhoneNumber.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
 
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
@@ -110,13 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
 
-
-
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-
-            }
-
+            @Override
             public void afterTextChanged(Editable s) {
 
             }
@@ -138,7 +145,23 @@ public class LoginActivity extends AppCompatActivity {
                 if(exist == true){
                     progressDialog.setMessage("Please Wait");
                     progressDialog.show();
-                    login();
+                    if(user == null){
+                        login();
+                    }
+                    else{
+                        if(user1 != null){
+                            if(user1.getPassword().equals(edtLoginPassword.getText().toString())){
+                                correct = true;
+                                login();
+                            }
+                            else{
+                                FirebaseAuth.getInstance().signOut();
+                                progressDialog.dismiss();
+                                Toast.makeText(LoginActivity.this,"Password tidak cocok",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+
                 }
                 else{
                     Toast.makeText(LoginActivity.this,"no telepon tidak valid",Toast.LENGTH_SHORT).show();
@@ -173,11 +196,7 @@ public class LoginActivity extends AppCompatActivity {
             //     detect the incoming verification SMS and perform verification without
             //     user action.
 
-
-
-            Toast.makeText(LoginActivity.this,"Sukses",Toast.LENGTH_LONG).show();
-
-            progressDialog.dismiss();
+            signInWithPhoneAuthCredential(credential);
         }
 
         @Override
@@ -209,8 +228,46 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             //Log.d(TAG, "signInWithCredential:success");
+                            if(user == null){
+                                user = task.getResult().getUser();
 
-                            FirebaseUser user = task.getResult().getUser();
+                                mSeller = mSeller.child(user.getUid());
+
+                                mSeller.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        user1 = dataSnapshot.getValue(User.class);
+                                        //Toast.makeText(LoginActivity.this,user1.getNoPin(),Toast.LENGTH_LONG).show();
+
+
+                                        if(user1.getPassword().equals(edtLoginPassword.getText().toString())){
+                                            correct = true;
+                                            progressDialog.dismiss();
+                                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                            startActivity(intent);
+                                        }
+                                        else{
+                                            FirebaseAuth.getInstance().signOut();
+                                            progressDialog.dismiss();
+                                            Toast.makeText(LoginActivity.this,"Password tidak cocok",Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                            else{
+                                if(correct == true){
+                                    progressDialog.dismiss();
+                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+
+
 
                             // ...
                         } else {
