@@ -18,6 +18,7 @@ public class User {
     public User(Double saldo, String noPin, String password) {
         this.saldo = saldo;
         this.noPin = noPin;
+        this.password = password;
     }
 
 

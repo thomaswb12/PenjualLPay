@@ -155,22 +155,23 @@ public class VerificationNumberActivity extends AppCompatActivity {
 
                                                                                         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
-                                                                                        Password pass = new Password(storePassword);
-
-                                                                                        try {
-                                                                                            String newPass = pass.sha256();
-                                                                                            User user = new User(0.0,"123456", newPass);
-                                                                                            mDatabase.child("Seller").child(mAuth.getCurrentUser().getUid()).setValue(user);
+                                                                                        User user = new User(0.0,"123456", storePassword);
+                                                                                        mDatabase.child("Seller").child(mAuth.getCurrentUser().getUid()).setValue(user);
 
 
-                                                                                            Intent intent = new Intent(VerificationNumberActivity.this, EnterpinActivity.class);
-                                                                                            intent.putExtra("state",0);
-                                                                                            startActivity(intent);
-                                                                                        }
-                                                                                        catch (NoSuchAlgorithmException e) {
-                                                                                            e.printStackTrace();
-                                                                                            Toast.makeText(VerificationNumberActivity.this,"Eror save pass",Toast.LENGTH_LONG).show();
-                                                                                        }
+                                                                                        Intent intent = new Intent(VerificationNumberActivity.this, FinishingRegistrationActivity.class);
+                                                                                        startActivity(intent);
+
+//                                                                                        Password pass = new Password(storePassword);
+//
+//                                                                                        try {
+//                                                                                            String newPass = pass.sha256();
+//
+//                                                                                        }
+//                                                                                        catch (NoSuchAlgorithmException e) {
+//                                                                                            e.printStackTrace();
+//                                                                                            Toast.makeText(VerificationNumberActivity.this,"Eror save pass",Toast.LENGTH_LONG).show();
+//                                                                                        }
 
                                                                                     }
                                                                                     else {
