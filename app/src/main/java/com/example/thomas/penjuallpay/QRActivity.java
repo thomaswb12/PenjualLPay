@@ -34,6 +34,7 @@ public class QRActivity extends AppCompatActivity {
     private String idTransaksi;
     private String totalPrice;
     private String myStoreName;
+    private String myPhotoUrl;
     private User user;
 
     EditText edtIDTransaksiFB;
@@ -65,7 +66,8 @@ public class QRActivity extends AppCompatActivity {
 
         //buat class DummyTransaction
         myStoreName = currentFirebaseUser.getDisplayName();
-        dummyTransaction = new DummyTransaction(Integer.parseInt(totalPrice),myStoreName);
+        myPhotoUrl = "/profilepics/"+currentFirebaseUser.getUid()+".jpg";
+        dummyTransaction = new DummyTransaction(Integer.parseInt(totalPrice),myStoreName,myPhotoUrl);
         //kirim ke db Dummy
         DatabaseReference mRefTransactionDummy =  database.getReference().child("transaksi").child("dummy").child(idTransaksi);
         mRefTransactionDummy.setValue(dummyTransaction);

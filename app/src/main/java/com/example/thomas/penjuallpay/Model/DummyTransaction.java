@@ -11,9 +11,10 @@ public class DummyTransaction {
     private String image_toko;
 
     //constructor
-    public DummyTransaction(int total, String nama_toko){
+    public DummyTransaction(int total, String nama_toko, String image_toko){
         this.total = total;
         this.nama_toko = nama_toko;
+        this.image_toko = image_toko;
     }
 
 
@@ -26,11 +27,19 @@ public class DummyTransaction {
         return total;
     }
 
+    public String getImage_toko() {
+        return image_toko;
+    }
+
     public void setNama_toko(String nama_toko) {
         this.nama_toko = nama_toko;
     }
 
     public void setTotal(int total) {
         this.total = total;
+    }
+
+    public void setImage_toko(String image_toko) {
+        this.image_toko = image_toko;
     }
 }
