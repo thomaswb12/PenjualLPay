@@ -2,6 +2,7 @@ package com.example.thomas.penjuallpay;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +10,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.thomas.penjuallpay.Model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class EnterpinActivity extends AppCompatActivity {
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser curUser = mAuth.getCurrentUser();
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Seller").child(curUser.getUid());
+
+    private ValueEventListener valueEvent;
+    private User user;
+    private String myCurrentPin;
+    private Double myCurrentSaldo;
+    private Double withdrawAmount;
+
+    private static long back_pressed ;
+
     public ImageView btnEnterpinOk;
     public ImageView btnEnterpinDelete;
     public Button btnEnterpin0;
@@ -39,6 +61,7 @@ public class EnterpinActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int stateFromExtra = intent.getIntExtra("state",0);
         myState = state.values()[stateFromExtra];
+        withdrawAmount = intent.getDoubleExtra("withdrawAmount",0.0);
 
         btnEnterpinOk = (ImageView) findViewById(R.id.btnEnterpinOk);
         btnEnterpinDelete = (ImageView) findViewById(R.id.btnEnterpinDelete);
@@ -86,17 +109,24 @@ public class EnterpinActivity extends AppCompatActivity {
                         myPinTamp="";
                     }
                     else{
-                        Intent intent = new Intent(EnterpinActivity.this, MainActivity.class);
+                        //simpen pin baru ke user
+                        mDatabase.child("noPin").setValue(myPin);
+                        Intent intent = new Intent(EnterpinActivity.this, FinishingRegistrationActivity.class);
                         startActivity(intent);
                     }
                 }
                 else if (myState == state.ConfirmWithdraw){
-                    //isi nanti yaa
-                    //tambahin->if PIN-nya benar dari class user
-                    Intent intent = new Intent(EnterpinActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    //tambahin->else PIN-nya salah
-                    //tambahin->Toast.makeText(EnterpinActivity.this,"You input a wrong PIN",Toast.LENGTH_LONG).show();
+                    myPin = myPinTamp;
+                    if(myCurrentPin.equals(myPin)){
+                        //currentSaldo nya dikurangi amount(amount dapet dari extra)
+                        myCurrentSaldo = myCurrentSaldo-withdrawAmount;
+                        mDatabase.child("saldo").setValue(myCurrentSaldo);
+                        Intent intent = new Intent(EnterpinActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(EnterpinActivity.this, "You input a wrong PIN", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -211,7 +241,44 @@ public class EnterpinActivity extends AppCompatActivity {
             txtEnterpinPin.setText("");
             myState = state.CreateNewPin;
         }
+        else if (myState == state.CreateNewPin){
+            if (back_pressed + 2000 > System.currentTimeMillis()){
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.addFlags((Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                startActivity(intent);
+                finish();
+            } else{
+                Toast.makeText(this, "Press once again to exit",Toast.LENGTH_SHORT).show();
+            }
+            back_pressed = System.currentTimeMillis();
+        }
         else
             super.onBackPressed();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        valueEvent = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                user = dataSnapshot.getValue(User.class);
+                myCurrentPin = user.getNoPin();
+                myCurrentSaldo = user.getSaldo();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        mDatabase.addValueEventListener(valueEvent);
+    }
+
+    @Override
+    protected void onStop() {
+        mDatabase.removeEventListener(valueEvent);
+        super.onStop();
     }
 }

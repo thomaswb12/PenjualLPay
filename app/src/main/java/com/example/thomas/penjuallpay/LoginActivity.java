@@ -66,6 +66,14 @@ public class LoginActivity extends AppCompatActivity {
                     progressDialog.dismiss();
 
                 Toast.makeText(LoginActivity.this, "sds",Toast.LENGTH_LONG).show();
+                /*
+                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    HashMap
+                    Toast.makeText(LoginActivity.this, dataSnapshot1.getKey(),Toast.LENGTH_LONG).show();
+                }*/
+                //hm = (HashMap) dataSnapshot.getValue();
+
+
             }
 
             @Override

@@ -33,4 +33,8 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    public void setNoPin(String noPin) {
+        this.noPin = noPin;
+    }
 }
