@@ -167,8 +167,8 @@ public class FinishingRegistrationActivity extends AppCompatActivity {
                                     Toast.makeText(FinishingRegistrationActivity.this,"Profile Updated",Toast.LENGTH_SHORT).show();
 //
                                     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                                    User user = new User(0.0);
-                                    mDatabase.child("Seller").child(curUser.getUid()).setValue(user);
+                                    User user = new User(0.0,"123456");
+                                    mDatabase.child("Seller").child(curUser.getPhoneNumber()).setValue(user);
 
                                     Intent intent = new Intent(FinishingRegistrationActivity.this, MainActivity.class);
                                     startActivity(intent);

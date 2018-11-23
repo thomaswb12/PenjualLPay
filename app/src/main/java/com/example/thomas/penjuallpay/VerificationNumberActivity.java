@@ -1,6 +1,7 @@
 package com.example.thomas.penjuallpay;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -28,10 +29,10 @@ public class VerificationNumberActivity extends AppCompatActivity {
     private FirebaseUser user;
 
     String storeName;
-    String storePhone;
     String storeEmail;
     String storePassword;
     String codeSent;
+    String from;
 
     public ProgressDialog progressDialog;
 
@@ -47,10 +48,19 @@ public class VerificationNumberActivity extends AppCompatActivity {
         edtVerifNumberInput = (EditText) findViewById(R.id.edtVerifNumberInput);
         btnVerifNumberRegister = (Button) findViewById(R.id.btnVerifNumberRegister);
 
-        codeSent = getIntent().getStringExtra("Code");
-        storeName = getIntent().getStringExtra("storeName");
-        storeEmail = getIntent().getStringExtra("storeEmail");
-        storePassword = getIntent().getStringExtra("storePassword");
+        from = getIntent().getStringExtra("context");
+        if(from.equals("Regis")){
+            codeSent = getIntent().getStringExtra("Code");
+            storeName = getIntent().getStringExtra("storeName");
+            storeEmail = getIntent().getStringExtra("storeEmail");
+            storePassword = getIntent().getStringExtra("storePassword");
+        }
+        else{
+            codeSent = getIntent().getStringExtra("Code");
+        }
+
+
+
 
         btnVerifNumberRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,23 +68,52 @@ public class VerificationNumberActivity extends AppCompatActivity {
                 PhoneAuthCredential credential = PhoneAuthProvider.getCredential(codeSent, edtVerifNumberInput.getText().toString());
                 progressDialog.setMessage("Please wait");
                 progressDialog.show();
-                signInWithPhoneAuthCredential(credential);
+                if(from.equals("Regis")){
+                    signUpWithPhoneAuthCredential(credential);
+                }
+                else{
+                    signInWithPhoneAuthCredential(credential);
+                }
 
             }
         });
     }
 
     private void setUser(){
-
-
-
-
         progressDialog.dismiss();
 
     }
 
-
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            //Log.d(TAG, "signInWithCredential:success");
+
+                            FirebaseUser user = task.getResult().getUser();
+                            Intent intent = new Intent(VerificationNumberActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            // ...
+                        } else {
+                            progressDialog.dismiss();
+                            Toast.makeText(VerificationNumberActivity.this,"Login Eror",Toast.LENGTH_LONG).show();
+                            // Sign in failed, display a message and update the UI
+                            //Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                progressDialog.dismiss();
+                                Toast.makeText(VerificationNumberActivity.this,"Login Eror",Toast.LENGTH_LONG).show();
+                                // The verification code entered was invalid
+                            }
+                        }
+                    }
+                });
+    }
+
+
+    private void signUpWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
