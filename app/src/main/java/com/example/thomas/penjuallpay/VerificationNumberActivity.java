@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.thomas.penjuallpay.Model.Password;
+import com.example.thomas.penjuallpay.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,6 +22,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.security.NoSuchAlgorithmException;
 
 public class VerificationNumberActivity extends AppCompatActivity {
     public Button btnVerifNumberRegister;
@@ -147,9 +153,25 @@ public class VerificationNumberActivity extends AppCompatActivity {
                                                                                         progressDialog.dismiss();
                                                                                         Toast.makeText(VerificationNumberActivity.this,"Profile Updated",Toast.LENGTH_SHORT).show();
 
-                                                                                        Intent intent = new Intent(VerificationNumberActivity.this, FinishingRegistrationActivity.class);
-                                                                                        startActivity(intent);
+                                                                                        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+                                                                                        Password pass = new Password(storePassword);
+
+                                                                                        try {
+                                                                                            String newPass = pass.sha256();
+                                                                                            User user = new User(0.0,"123456", newPass);
+                                                                                            mDatabase.child("Seller").child(mAuth.getCurrentUser().getUid()).setValue(user);
+
+
+                                                                                            Intent intent = new Intent(VerificationNumberActivity.this, FinishingRegistrationActivity.class);
+                                                                                            startActivity(intent);
                                                                                         }
+                                                                                        catch (NoSuchAlgorithmException e) {
+                                                                                            e.printStackTrace();
+                                                                                            Toast.makeText(VerificationNumberActivity.this,"Eror save pass",Toast.LENGTH_LONG).show();
+                                                                                        }
+
+                                                                                    }
                                                                                     else {
                                                                                         progressDialog.dismiss();
                                                                                         Toast.makeText(VerificationNumberActivity.this,"Error",Toast.LENGTH_SHORT).show();
