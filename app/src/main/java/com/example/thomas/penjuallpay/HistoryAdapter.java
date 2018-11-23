@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.thomas.penjuallpay.Model.History;
+
 import java.util.List;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryHolder>{
@@ -32,7 +34,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryH
         historyHolder.txtHarga.setText("Rp "+history.harga);
         historyHolder.txtTanggal.setText(history.tglTransaksi);
         historyHolder.txtPelaku.setText(history.pelaku);
-        historyHolder.txtNoTransaksi.setText("" + history.noTransaksi);
+        historyHolder.txtNoTransaksi.setText("" + history.idTransaksi);
     }
 
     @Override
