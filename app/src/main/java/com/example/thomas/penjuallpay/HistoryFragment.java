@@ -2,7 +2,6 @@ package com.example.thomas.penjuallpay;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,9 +13,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.thomas.penjuallpay.Model.History;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,17 +24,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HistoryFragment extends Fragment {
+    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+    String myUID = currentFirebaseUser.getUid();
+
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference dbTransaksi = database.getReference("transaksi");
+    //DatabaseReference dbTransaksi = database.getReference("transaksi");
+
+    DatabaseReference dbTransaksiJualBeli = database.getReference("transaksi").child("seller").child("jualBeli").child(myUID);
+    DatabaseReference dbTransaksiWithdraw = database.getReference("transaksi").child("seller").child("withdraw").child(myUID);
     public List<History> listHistory;
     ValueEventListener valueEvent;
 
@@ -61,7 +67,7 @@ public class HistoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        dbTransaksi.addValueEventListener(valueEvent);
+        dbTransaksiJualBeli.addValueEventListener(valueEvent);
     }
 
     @Override
@@ -71,11 +77,12 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listHistory.clear();
-                ArrayList ListDapat = new ArrayList();
-                ListDapat = (ArrayList) dataSnapshot.getValue();
-                for(int i = 0; i < ListDapat.size(); i++){
-                    Map item = (Map) ListDapat.get(i);
-                    listHistory.add(new History(item.get("tanggal_transaksi").toString(), Integer.parseInt(item.get("total_harga").toString()), item.get("telp_user").toString(), Integer.parseInt(item.get("no_transaksi").toString())));
+                Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
+                HashMap<String, Object> history = null;
+                while (items.hasNext()){
+                    DataSnapshot item = items.next();
+                    history = (HashMap<String, Object>) item.getValue();
+                    listHistory.add(new History(history.get("waktu").toString(), Integer.parseInt(history.get("total").toString()), history.get("telp_pembeli").toString(), item.getKey()));
                     historyAdapter.notifyDataSetChanged();
                 }
             }
@@ -85,21 +92,21 @@ public class HistoryFragment extends Fragment {
 
             }
         };
-        dbTransaksi.addValueEventListener(valueEvent);
+        dbTransaksiJualBeli.addValueEventListener(valueEvent);
     }
 
     @Override
     public void onPause() {
-        if (valueEvent != null && dbTransaksi!=null) {
-            dbTransaksi.removeEventListener(valueEvent);
+        if (valueEvent != null && dbTransaksiJualBeli!=null) {
+            dbTransaksiJualBeli.removeEventListener(valueEvent);
         }
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        if (valueEvent != null && dbTransaksi!=null) {
-            dbTransaksi.removeEventListener(valueEvent);
+        if (valueEvent != null && dbTransaksiJualBeli!=null) {
+            dbTransaksiJualBeli.removeEventListener(valueEvent);
         }
         super.onStop();
     }

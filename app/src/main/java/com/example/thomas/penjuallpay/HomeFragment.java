@@ -55,9 +55,8 @@ public class HomeFragment extends Fragment {
         valueEvent = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                user = dataSnapshot.getValue(User.class);
-                //user = new User(Double.valueOf(dataSnapshot.child("saldo").getValue().toString())); //pake constructor -> User(Double saldo)
-
+                //user = dataSnapshot.getValue(User.class);
+                user = new User(Double.valueOf(dataSnapshot.child("saldo").getValue().toString())); //pake constructor -> User(Double saldo)
                 tvHomeSaldo.setText("Rp. "+ user.getSaldo().toString());
             }
 
