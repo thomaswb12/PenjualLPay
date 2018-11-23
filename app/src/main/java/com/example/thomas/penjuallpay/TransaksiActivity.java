@@ -55,10 +55,14 @@ public class TransaksiActivity extends AppCompatActivity {
         Intent intent = new Intent(this,QRActivity.class);
         intent.putExtra("idTransaksi",idTransaksi); //kirim ID transaksi yang sudah dibuat
         totalPrice = edtTransaksiTotalPrice.getText().toString();
-        intent.putExtra("totalPrice",totalPrice); //kirim total harga yang sudah diinputkan
-        startActivity(intent);
-
-       this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        if(totalPrice.equals("")){
+            Toast.makeText(this, "Total price is empty", Toast.LENGTH_LONG).show();
+        }
+        else{
+            intent.putExtra("totalPrice",totalPrice); //kirim total harga yang sudah diinputkan
+            startActivity(intent);
+            this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
