@@ -46,14 +46,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="My Saldo"
+            android:text="My Ballance"
             android:textAlignment="center" />
 
         <TextView
             android:id="@+id/txtWithdrawSaldo"
             android:layout_width="match_parent"
             android:layout_height="37dp"
-            android:text="Rp 536.0000,00"
+            android:text="Rp 5360000,00"
             android:textAlignment="center"
             android:textColor="@color/Orange"
             android:textSize="24sp"
@@ -88,8 +88,9 @@
                 android:id="@+id/txtWithdrawMinimum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Minimal withdraw Rp 50.000,00"
+                android:text="Minimum withdraw Rp 50.000,00"
                 android:textStyle="italic" />
+
         </LinearLayout>
 
         <View

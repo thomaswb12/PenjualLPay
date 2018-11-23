@@ -36,10 +36,22 @@ public class EnterpinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enterpin);
 
+        Intent intent = getIntent();
+        int stateFromExtra = intent.getIntExtra("state",0);
+        myState = state.values()[stateFromExtra];
+
         btnEnterpinOk = (ImageView) findViewById(R.id.btnEnterpinOk);
         btnEnterpinDelete = (ImageView) findViewById(R.id.btnEnterpinDelete);
         txtEnterpinPin = (TextView) findViewById(R.id.txtEnterpinPin);
         txtEnterpinTitle = (TextView) findViewById(R.id.txtEnterpinTitle);
+
+        if (myState == state.CreateNewPin)
+            txtEnterpinTitle.setText("Create New Password");
+        else if (myState == state.ConfirmNewPin)
+            txtEnterpinTitle.setText("Confirm Your PIN");
+        else if (myState == state.ConfirmWithdraw)
+            txtEnterpinTitle.setText("Enter Your PIN");
+
 
         btnEnterpin0 = (Button) findViewById(R.id.btnEnterpin0);
         btnEnterpin1 = (Button) findViewById(R.id.btnEnterpin1);
@@ -80,6 +92,11 @@ public class EnterpinActivity extends AppCompatActivity {
                 }
                 else if (myState == state.ConfirmWithdraw){
                     //isi nanti yaa
+                    //tambahin->if PIN-nya benar dari class user
+                    Intent intent = new Intent(EnterpinActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    //tambahin->else PIN-nya salah
+                    //tambahin->Toast.makeText(EnterpinActivity.this,"You input a wrong PIN",Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
-                    android:text="L-PAY SALDO"
+                    android:text="L-PAY BALLANCE"
                     android:textColor="@color/windowBackground"
                     android:textSize="20sp" />
 
