@@ -111,8 +111,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     //------------ utk fragment SETTING ----------------
-    public void tEditProfile(View v){
+    public void toEditProfile(View v){
         Intent intent = new Intent(MainActivity.this, EditProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void toEditPassword(View v){
+        Intent intent = new Intent(MainActivity.this, EditPasswordActivity.class);
         startActivity(intent);
     }
 

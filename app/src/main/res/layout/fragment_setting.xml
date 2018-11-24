@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@android:color/background_light"
-                android:onClick="tEditProfile"
+                android:onClick="toEditProfile"
                 android:text="Edit Profile"
                 android:textAlignment="viewStart"
                 android:textAllCaps="false"
@@ -50,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@android:color/background_light"
+                android:onClick="toEditPassword"
                 android:text="Password"
                 android:textAlignment="viewStart"
                 android:textAllCaps="false" />
@@ -93,17 +94,6 @@
                 android:background="@android:color/background_light"
                 android:onClick="toSettingPIN"
                 android:text="PIN"
-                android:textAlignment="viewStart"
-                android:textAllCaps="false"
-                android:textSize="14sp" />
-
-            <Button
-                android:id="@+id/btnSettingHistory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@android:color/background_light"
-                android:text="Clear History"
                 android:textAlignment="viewStart"
                 android:textAllCaps="false"
                 android:textSize="14sp" />
