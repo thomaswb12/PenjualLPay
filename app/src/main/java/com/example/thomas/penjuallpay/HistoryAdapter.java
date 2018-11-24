@@ -12,8 +12,9 @@ import com.example.thomas.penjuallpay.Model.History;
 
 import java.util.List;
 
+//------- ini adapter untuk history JUALBELI saja --------------
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryHolder>{
-    private List<History> listHistory;//untuk data Dummy
+    private List<History> listHistory;
     private Context mContext;//supaya FilmAdapter tau activity apa yang mau pake dia
 
     public HistoryAdapter(List<History> listHistory, Context mContext){

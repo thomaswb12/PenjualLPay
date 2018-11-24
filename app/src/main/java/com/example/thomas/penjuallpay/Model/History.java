@@ -1,7 +1,5 @@
 package com.example.thomas.penjuallpay.Model;
 
-import java.util.Date;
-
 public class History {
     public String tglTransaksi;
     public int harga;
