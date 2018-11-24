@@ -38,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@android:color/background_light"
+                android:onClick="tEditProfile"
                 android:text="Edit Profile"
                 android:textAlignment="viewStart"
                 android:textAllCaps="false"

@@ -39,7 +39,9 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".VerificationNumberActivity" />
-        <activity android:name=".FinishingRegistrationActivity"></activity>
+        <activity android:name=".FinishingRegistrationActivity" />
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".EditPasswordActivity"></activity>
     </application>
 
 </manifest>

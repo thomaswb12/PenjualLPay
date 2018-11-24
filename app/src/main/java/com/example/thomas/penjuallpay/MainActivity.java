@@ -94,13 +94,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void logout(View v){
-        mAuth.signOut();
-        Intent intent = new Intent(this,LoginActivity.class);
-        startActivity(intent);
-
-        //this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
 
     @Override
     public void onBackPressed() {
@@ -118,9 +111,22 @@ public class MainActivity extends AppCompatActivity {
 
 
     //------------ utk fragment SETTING ----------------
+    public void tEditProfile(View v){
+        Intent intent = new Intent(MainActivity.this, EditProfileActivity.class);
+        startActivity(intent);
+    }
+
     public void toSettingPIN(View v){
         Intent intent = new Intent(MainActivity.this, EnterpinActivity.class);
         intent.putExtra("state",3);
         startActivity(intent);
     }
+
+    public void logout(View v){
+        mAuth.signOut();
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
+        //this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
 }
