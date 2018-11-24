@@ -90,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@android:color/background_light"
+                android:onClick="toSettingPIN"
                 android:text="PIN"
                 android:textAlignment="viewStart"
                 android:textAllCaps="false"

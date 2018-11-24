@@ -120,7 +120,7 @@ public class HistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_history, container, false);
 
-        ViewPager viewPager = (ViewPager) v.findViewById(R.id.viewPager);
+        ViewPager viewPager = (ViewPager) v.findViewById(R.id.viewPager1);
         setupViewPager(viewPager);
         // Set Tabs inside Toolbar
         TabLayout tabs = (TabLayout) v.findViewById(R.id.tabLayout);

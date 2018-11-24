@@ -116,4 +116,11 @@ public class MainActivity extends AppCompatActivity {
         back_pressed = System.currentTimeMillis();
     }
 
+
+    //------------ utk fragment SETTING ----------------
+    public void toSettingPIN(View v){
+        Intent intent = new Intent(MainActivity.this, EnterpinActivity.class);
+        intent.putExtra("state",3);
+        startActivity(intent);
+    }
 }

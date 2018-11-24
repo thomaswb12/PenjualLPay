@@ -51,7 +51,7 @@ public class EnterpinActivity extends AppCompatActivity {
 
     public TextView txtEnterpinPin;
     public TextView txtEnterpinTitle;
-    private enum state{CreateNewPin, ConfirmNewPin, ConfirmWithdraw};
+    private enum state{CreateNewPin, ConfirmNewPin, ConfirmWithdraw, EnterCurrentPin, SettingCreateNewPin, SettingConfirmNewPin};
     private state myState = state.CreateNewPin;
 
     private String myPin;
@@ -78,6 +78,12 @@ public class EnterpinActivity extends AppCompatActivity {
             txtEnterpinTitle.setText("Confirm Your PIN");
         else if (myState == state.ConfirmWithdraw)
             txtEnterpinTitle.setText("Enter Your PIN");
+        else if (myState == state.EnterCurrentPin)
+            txtEnterpinTitle.setText("Enter Your Current PIN");
+        else if (myState == state.SettingCreateNewPin)
+            txtEnterpinTitle.setText("Create New Password");
+        else if (myState == state.SettingConfirmNewPin)
+            txtEnterpinTitle.setText("Confirm Your PIN");
 
 
         btnEnterpin0 = (Button) findViewById(R.id.btnEnterpin0);
@@ -131,6 +137,44 @@ public class EnterpinActivity extends AppCompatActivity {
                     }
                     else{
                         Toast.makeText(EnterpinActivity.this, "You input a wrong PIN", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else if (myState == state.EnterCurrentPin){
+                    myPin = myPinTamp;
+                    if(myCurrentPin.equals(myPin)){
+                        myState=state.SettingCreateNewPin;
+                        txtEnterpinPin.setText("");
+                        myPinTamp="";
+                        txtEnterpinTitle.setText("Create New Password");
+                    }
+                    else{
+                        Toast.makeText(EnterpinActivity.this, "You input a wrong PIN", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else if(myState == state.SettingCreateNewPin){
+                    if(txtEnterpinPin.getText().toString().length()==6){
+                        myPin = myPinTamp;
+                        txtEnterpinPin.setText("");
+                        myPinTamp="";
+                        txtEnterpinTitle.setText("Confirm Your New PIN");
+                        myState = state.SettingConfirmNewPin;
+                    }
+                    else{
+                        Toast.makeText(EnterpinActivity.this, "PIN must be 6 characters", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else if (myState == state.SettingConfirmNewPin){
+                    if(! myPin.equals(myPinTamp)){
+                        Toast.makeText(EnterpinActivity.this, "You input a wrong PIN", Toast.LENGTH_SHORT).show();
+                        txtEnterpinPin.setText("");
+                        myPinTamp="";
+                    }
+                    else{
+                        //simpen pin baru ke user
+                        mDatabase.child("noPin").setValue(myPin);
+                        Toast.makeText(EnterpinActivity.this, "Your PIN succesfully changed", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(EnterpinActivity.this, MainActivity.class);
+                        startActivity(intent);
                     }
                 }
             }
@@ -257,6 +301,10 @@ public class EnterpinActivity extends AppCompatActivity {
                 Toast.makeText(this, "Press once again to exit",Toast.LENGTH_SHORT).show();
             }
             back_pressed = System.currentTimeMillis();
+        }
+        else if (myState == state.SettingCreateNewPin){
+            Intent intent = new Intent(EnterpinActivity.this, MainActivity.class);
+            startActivity(intent);
         }
         else
             super.onBackPressed();
