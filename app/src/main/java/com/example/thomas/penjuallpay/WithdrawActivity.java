@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,8 @@ public class WithdrawActivity extends AppCompatActivity {
     public Button btnWithdrawWithdraw;
     public EditText txtWithdrawAmount;
     public TextView txtWithdrawSaldo;
+    public Spinner dropdownBank;
+    public String[] pilihanBank;
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser curUser = mAuth.getCurrentUser();
@@ -44,12 +48,23 @@ public class WithdrawActivity extends AppCompatActivity {
         txtWithdrawAmount = (EditText) findViewById(R.id.txtWithdrawAmount);
         txtWithdrawSaldo = (TextView) findViewById(R.id.txtWithdrawSaldo);
 
+        dropdownBank = findViewById(R.id.spinnerWithdrawBank);
+        pilihanBank = new String[]{"Choose Bank", "Bank BCA", "Bank BRI", "Bank BNI", "Bank Mandiri"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, pilihanBank);
+        dropdownBank.setAdapter(adapter);
     }
 
     public void toEnterPin(View v){
+        EditText nomorRekening = (EditText) findViewById(R.id.edtWithdrawRekening);
         currentBallance = myCurrentSaldo;
         if (txtWithdrawAmount.getText().toString().equals("")){
             Toast.makeText(this, "withdraw amount still empty", Toast.LENGTH_LONG).show();
+        }
+        else if(dropdownBank.getSelectedItem().toString().equals(pilihanBank[0])){
+            Toast.makeText(this, "Choose bank first", Toast.LENGTH_LONG).show();
+        }
+        else if(nomorRekening.getText().toString().equals("")){
+            Toast.makeText(this, "Enter your bank account number first", Toast.LENGTH_LONG).show();
         }
         else{
             Double ballanceForWithdraw = Double.parseDouble(txtWithdrawAmount.getText().toString());

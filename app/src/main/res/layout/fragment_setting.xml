@@ -55,16 +55,6 @@
                 android:textAlignment="viewStart"
                 android:textAllCaps="false" />
 
-            <Button
-                android:id="@+id/btnSettingRekening"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@android:color/background_light"
-                android:text="Rekening"
-                android:textAlignment="viewStart"
-                android:textAllCaps="false" />
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"

@@ -111,73 +111,42 @@
 
             <TextView
                 android:id="@+id/txtTopUpPayment"
-                android:layout_width="342dp"
+                android:layout_width="371dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
-                android:text="Select Bill"
+                android:text="To"
                 android:textSize="18sp" />
 
-            <LinearLayout
+            <Spinner
+                android:id="@+id/spinnerWithdrawBank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/my_button_white"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp">
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="210dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:text="BCA - 6042262273"
-                    android:textColor="@android:color/black"
-                    android:textSize="24sp" />
-
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="2dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
-            </LinearLayout>
-
-            <LinearLayout
+            <EditText
+                android:id="@+id/edtWithdrawRekening"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/my_button_white"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp">
+                android:ems="10"
+                android:hint="Bank Account Number"
+                android:inputType="phone" />
 
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="210dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:text="BNI - 04527655297"
-                    android:textColor="@android:color/black"
-                    android:textSize="24sp" />
-
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="2dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
-            </LinearLayout>
+            <EditText
+                android:id="@+id/edtWithdrawPesan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="Message (Opsional)"
+                android:inputType="textPersonName" />
 
         </LinearLayout>
 
