@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     private HashMap<String, Boolean> hm;
     private User user1;
     private FirebaseUser user;
+    private String code;
     private boolean correct = false;
 
     private ValueEventListener valueEvent;
@@ -64,8 +65,6 @@ public class LoginActivity extends AppCompatActivity {
                 hm = (HashMap) dataSnapshot.getValue();
                 if(progressDialog.isShowing())
                     progressDialog.dismiss();
-
-                Toast.makeText(LoginActivity.this, "sds",Toast.LENGTH_LONG).show();
                 /*
                 for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                     HashMap
@@ -100,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLoginLogin = (Button) findViewById(R.id.btnLoginLogin);
         btnLoginRegister = (Button) findViewById(R.id.btnLoginRegister);
         edtLoginPhoneNumber = findViewById(R.id.edtLoginPhoneNumber);
-        edtLoginPassword = findViewById(R.id.edtLoginPassword);
+//        edtLoginPassword = findViewById(R.id.edtLoginPassword);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please Wait");
@@ -118,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                                       int count) {
                 try{
                     if(hm.get(s.toString())){
-                        Toast.makeText(LoginActivity.this,""+hm.get("+6289521337118"),Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this,""+hm.get(edtLoginPhoneNumber.getText().toString()),Toast.LENGTH_LONG).show();
                         exist = true;
                     }
                 }catch (Exception e){
@@ -153,22 +152,23 @@ public class LoginActivity extends AppCompatActivity {
                 if(exist == true){
                     progressDialog.setMessage("Please Wait");
                     progressDialog.show();
-                    if(user == null){
-                        login();
-                    }
-                    else{
-                        if(user1 != null){
-                            if(user1.getPassword().equals(edtLoginPassword.getText().toString())){
-                                correct = true;
-                                login();
-                            }
-                            else{
-                                FirebaseAuth.getInstance().signOut();
-                                progressDialog.dismiss();
-                                Toast.makeText(LoginActivity.this,"Password tidak cocok",Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    }
+                    login();
+//                    if(user == null){
+//                        login();
+//                    }
+//                    else{
+//                        if(user1 != null){
+//                            if(user1.getPassword().equals(edtLoginPassword.getText().toString())){
+//                                correct = true;
+//                                login();
+//                            }
+//                            else{
+//                                FirebaseAuth.getInstance().signOut();
+//                                progressDialog.dismiss();
+//                                Toast.makeText(LoginActivity.this,"Password tidak cocok",Toast.LENGTH_LONG).show();
+//                            }
+//                        }
+//                    }
 
                 }
                 else{
@@ -204,7 +204,6 @@ public class LoginActivity extends AppCompatActivity {
             //     detect the incoming verification SMS and perform verification without
             //     user action.
 
-            signInWithPhoneAuthCredential(credential);
         }
 
         @Override
@@ -226,68 +225,79 @@ public class LoginActivity extends AppCompatActivity {
             // Show a message and update the UI
             // ...
         }
+
+        @Override
+        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+            super.onCodeSent(s, forceResendingToken);
+            code = s;
+            Intent intent = new Intent(LoginActivity.this,VerificationNumberActivity.class);
+            intent.putExtra("context", "login");
+            intent.putExtra("Code",code);
+            startActivity(intent);
+
+        }
     };
 
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        FirebaseAuth.getInstance().signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            //Log.d(TAG, "signInWithCredential:success");
-                            if(user == null){
-                                user = task.getResult().getUser();
-
-                                mSeller = mSeller.child(user.getUid());
-
-                                mSeller.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        user1 = dataSnapshot.getValue(User.class);
-                                        //Toast.makeText(LoginActivity.this,user1.getNoPin(),Toast.LENGTH_LONG).show();
-
-
-                                        if(user1.getPassword().equals(edtLoginPassword.getText().toString())){
-                                            correct = true;
-                                            progressDialog.dismiss();
-                                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                                            startActivity(intent);
-                                        }
-                                        else{
-                                            FirebaseAuth.getInstance().signOut();
-                                            progressDialog.dismiss();
-                                            Toast.makeText(LoginActivity.this,"Password tidak cocok",Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
-                            }
-                            else{
-                                if(correct == true){
-                                    progressDialog.dismiss();
-                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                                    startActivity(intent);
-                                }
-                            }
-
-
-
-                            // ...
-                        } else {
-                            // Sign in failed, display a message and update the UI
-                            //Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                // The verification code entered was invalid
-                            }
-                        }
-                    }
-                });
-    }
+//    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+//        FirebaseAuth.getInstance().signInWithCredential(credential)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            // Sign in success, update UI with the signed-in user's information
+//                            //Log.d(TAG, "signInWithCredential:success");
+//                            if(user == null){
+//                                user = task.getResult().getUser();
+//
+//                                mSeller = mSeller.child(user.getUid());
+//
+//                                mSeller.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                        user1 = dataSnapshot.getValue(User.class);
+//                                        //Toast.makeText(LoginActivity.this,user1.getNoPin(),Toast.LENGTH_LONG).show();
+//
+//
+//                                        if(user1.getPassword().equals(edtLoginPassword.getText().toString())){
+//                                            correct = true;
+//                                            progressDialog.dismiss();
+//                                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+//                                            startActivity(intent);
+//                                        }
+//                                        else{
+//                                            FirebaseAuth.getInstance().signOut();
+//                                            progressDialog.dismiss();
+//                                            Toast.makeText(LoginActivity.this,"Password tidak cocok",Toast.LENGTH_LONG).show();
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                    }
+//                                });
+//                            }
+//                            else{
+//                                if(correct == true){
+//                                    progressDialog.dismiss();
+//                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+//                                    startActivity(intent);
+//                                }
+//                            }
+//
+//
+//
+//                            // ...
+//                        } else {
+//                            // Sign in failed, display a message and update the UI
+//                            //Log.w(TAG, "signInWithCredential:failure", task.getException());
+//                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+//                                // The verification code entered was invalid
+//                            }
+//                        }
+//                    }
+//                });
+//    }
 
 
 
