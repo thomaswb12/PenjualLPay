@@ -72,10 +72,15 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private Boolean isUserExist(String number){
-        if(hm.get(number) == true){
-            return true;
-        }
-        else{
+        Boolean cek = false;
+        try {
+            if(hm.get(number)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }catch (Exception e){
             return false;
         }
     }
@@ -128,7 +133,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     else{
                         if(isValidEmail(storeEmail)){
                             if(isUserExist(storePhone)){
-                                Toast.makeText(RegistrationActivity.this,"Phone number exist",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegistrationActivity.this,"Phone number already exist",Toast.LENGTH_SHORT).show();
                             }
                             else{
                                 regis();

@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edtLoginPhoneNumber;
     private EditText edtLoginPassword;
     private ProgressDialog progressDialog;
-    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("ListPhone");
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("ListPhoneSeller");
     private DatabaseReference mSeller = FirebaseDatabase.getInstance().getReference("Seller");
     private boolean exist = false;
     private HashMap<String, Boolean> hm;

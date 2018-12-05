@@ -88,7 +88,8 @@ public class VerificationNumberActivity extends AppCompatActivity {
     }
 
     private void writeListPhone(String number){
-        mDatabase.child("users").child("ListPhone").setValue(number);
+        mDatabase.child("ListPhone").child(number).setValue(true);
+        mDatabase.child("ListPhoneSeller").child(number).setValue(true);
     }
 
     private void setUser(){
@@ -167,17 +168,6 @@ public class VerificationNumberActivity extends AppCompatActivity {
 
                                                                                         Intent intent = new Intent(VerificationNumberActivity.this, FinishingRegistrationActivity.class);
                                                                                         startActivity(intent);
-
-//                                                                                        Password pass = new Password(storePassword);
-//
-//                                                                                        try {
-//                                                                                            String newPass = pass.sha256();
-//
-//                                                                                        }
-//                                                                                        catch (NoSuchAlgorithmException e) {
-//                                                                                            e.printStackTrace();
-//                                                                                            Toast.makeText(VerificationNumberActivity.this,"Eror save pass",Toast.LENGTH_LONG).show();
-//                                                                                        }
 
                                                                                     }
                                                                                     else {
