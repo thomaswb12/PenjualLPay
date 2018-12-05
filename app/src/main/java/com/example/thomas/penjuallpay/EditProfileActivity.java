@@ -76,6 +76,17 @@ public class EditProfileActivity extends AppCompatActivity {
                 uploadImageToFirebaseStorage();
             }
         });
+
+        //tampilkan foto
+        final long ONE_MEGABYTE = 1024 * 1024;
+        StorageReference ref = FirebaseStorage.getInstance().getReference("/profilepics/"+curUser.getUid()+".jpg");
+        ref.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                imgEditProfileStoreImage.setImageBitmap(bitmap);
+            }
+        });
     }
 
     private void openGallery(){

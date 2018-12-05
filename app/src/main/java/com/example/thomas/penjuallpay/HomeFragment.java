@@ -2,6 +2,8 @@ package com.example.thomas.penjuallpay;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.thomas.penjuallpay.Model.AuthUser;
 import com.example.thomas.penjuallpay.Model.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -62,6 +65,7 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
                 //user = new User(Double.valueOf(dataSnapshot.child("saldo").getValue().toString())); //pake constructor -> User(Double saldo)
+                //tvHomeSaldo.setText("Rp. "+ user.getSaldo().toString());
                 tvHomeSaldo.setText("Rp. "+ user.getSaldo().toString());
             }
 
@@ -85,6 +89,18 @@ public class HomeFragment extends Fragment {
         imgHomeStoreLogo = (ImageView) v.findViewById(R.id.imgHomeStoreLogo);
         tvHomeSaldo = v.findViewById(R.id.tvHomeSaldo);
 
+
+        StorageReference profile = FirebaseStorage.getInstance().getReference("/profilepics/"+curUser.getUid()+".jpg");
+
+        final long ONE_MEGABYTE = 1024 * 1024;
+        StorageReference ref = FirebaseStorage.getInstance().getReference("/profilepics/"+curUser.getUid()+".jpg");
+        ref.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                imgHomeStoreLogo.setImageBitmap(bitmap);
+            }
+        });
 
 
         //AuthUser authUser= new AuthUser();

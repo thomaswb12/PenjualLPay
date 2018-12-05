@@ -107,7 +107,7 @@
 
                 android:layout_marginBottom="30dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/ic_toko_cookies"
+                android:src="@drawable/ic_store_default"
                 app:civ_border_color="#fff"
                 app:civ_border_width="2dp" />
 
