@@ -3,6 +3,7 @@ package com.example.thomas.penjuallpay;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,7 +17,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -32,6 +39,51 @@ public class RegistrationActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
 
+
+    private ValueEventListener valueEvent;
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("ListPhone");
+    private HashMap<String, Boolean> hm;
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        valueEvent = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                hm = (HashMap) dataSnapshot.getValue();
+                if(progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        mDatabase.addValueEventListener(valueEvent);
+    }
+
+    @Override
+    protected void onStop() {
+        mDatabase.removeEventListener(valueEvent);
+        super.onStop();
+    }
+
+    private Boolean isUserExist(String number){
+        Boolean cek = false;
+        try {
+            if(hm.get(number)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }catch (Exception e){
+            return false;
+        }
+    }
 
 
     @Override
@@ -80,7 +132,13 @@ public class RegistrationActivity extends AppCompatActivity {
                     }
                     else{
                         if(isValidEmail(storeEmail)){
-                            regis();
+                            if(isUserExist(storePhone)){
+                                Toast.makeText(RegistrationActivity.this,"Phone number already exist",Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                regis();
+                            }
+
                         }
                         else{
                             Toast.makeText(RegistrationActivity.this,"not valid",Toast.LENGTH_SHORT).show();

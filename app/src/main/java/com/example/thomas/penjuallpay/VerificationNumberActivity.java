@@ -33,6 +33,7 @@ public class VerificationNumberActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+    private DatabaseReference mDatabase;
 
     String storeName;
     String storeEmail;
@@ -48,6 +49,7 @@ public class VerificationNumberActivity extends AppCompatActivity {
         setContentView(R.layout.activity_verification_number);
 
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         progressDialog = new ProgressDialog(this);
 
@@ -83,6 +85,11 @@ public class VerificationNumberActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void writeListPhone(String number){
+        mDatabase.child("ListPhone").child(number).setValue(true);
+        mDatabase.child("ListPhoneSeller").child(number).setValue(true);
     }
 
     private void setUser(){
@@ -156,20 +163,11 @@ public class VerificationNumberActivity extends AppCompatActivity {
                                                                                         User user = new User(0.0,"123456", storePassword);
                                                                                         mDatabase.child("Seller").child(mAuth.getCurrentUser().getUid()).setValue(user);
 
+                                                                                        writeListPhone(mAuth.getCurrentUser().getPhoneNumber());
+
 
                                                                                         Intent intent = new Intent(VerificationNumberActivity.this, FinishingRegistrationActivity.class);
                                                                                         startActivity(intent);
-
-//                                                                                        Password pass = new Password(storePassword);
-//
-//                                                                                        try {
-//                                                                                            String newPass = pass.sha256();
-//
-//                                                                                        }
-//                                                                                        catch (NoSuchAlgorithmException e) {
-//                                                                                            e.printStackTrace();
-//                                                                                            Toast.makeText(VerificationNumberActivity.this,"Eror save pass",Toast.LENGTH_LONG).show();
-//                                                                                        }
 
                                                                                     }
                                                                                     else {
