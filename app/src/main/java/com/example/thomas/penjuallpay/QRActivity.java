@@ -85,12 +85,29 @@ public class QRActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
+        mRefTransactionDummy.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.child("telp_pembeli").equals("")){
+                    DatabaseReference mTransJualBeli =  database.getReference().child("transaksi").child("seller").child("jualBeli").child(myUID).child(idTransaksi);
+                    mTransJualBeli.child("telp_pembeli").setValue(dataSnapshot.child("telp_pembeli").getValue());
+                    mTransJualBeli.child("total").setValue(dataSnapshot.child("total").getValue());
+                    mTransJualBeli.child("waktu").setValue(dataSnapshot.child("waktu").getValue());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void back(View v){
+
         Intent intent = new Intent(this,TransaksiActivity.class);
         startActivity(intent);
-
         this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
